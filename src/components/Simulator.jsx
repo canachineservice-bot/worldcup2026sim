@@ -401,7 +401,6 @@ export default function App(){
         ["/schedule","Schedule"],
         ["/predictions","Predictions"],
         ["/betting","📊 Betting"],
-        ["/morocco","Morocco"],
       ].map(([to,label])=>(
         <Link key={to} to={to} style={{fontSize:13,fontWeight:to==="/betting"?800:600,color:to==="/betting"?C.ac:C.bl,textDecoration:"none"}}>{label}</Link>
       ))}
@@ -635,9 +634,12 @@ export default function App(){
   </div>)}
 
   {/* ── FOOTER ── */}
-  <div style={{textAlign:"center",padding:"14px 12px 32px",color:C.t3,fontSize:11}}>
-    FIFA World Cup 2026 Simulator — BY <span style={{fontWeight:700,color:C.tx}}>ZOUHAIRE EL MATAR</span>{" "}
-    <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:16,verticalAlign:"middle"}}>💬</a>
+  <div style={{textAlign:"center",padding:"14px 12px 32px"}}>
+    <div style={{fontSize:9,color:C.t3,marginBottom:2}}>by</div>
+    <div style={{fontFamily:"'Oswald',sans-serif",fontSize:13,fontWeight:700,letterSpacing:2,color:C.t3}}>
+      ZOUHAIRE EL MATAR{" "}
+      <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:14,verticalAlign:"middle"}}>💬</a>
+    </div>
   </div>
   </div>);
 }
