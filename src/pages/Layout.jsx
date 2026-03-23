@@ -23,6 +23,7 @@ export default function Layout({ children, title }) {
           <Link to="/groups" style={S.link}>Groups</Link>
           <Link to="/schedule" style={S.link}>Schedule</Link>
           <Link to="/predictions" style={S.link}>Predictions</Link>
+          <Link to="/betting" style={{...S.link, color: '#d4145a', fontWeight: 800}}>📊 Betting</Link>
           <Link to="/morocco" style={S.link}>Morocco</Link>
         </nav>
       </div>

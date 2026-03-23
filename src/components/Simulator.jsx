@@ -89,52 +89,7 @@ POR:{c:"POR",f:"🇵🇹",g:"K",rt:86,rk:4,wc:5,fm:7,df:7,ho:0,xg:1.8,gpm:1.9,cs
 ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:85,rk:4,wc:6,fm:7,df:7,ho:0,xg:1.7,gpm:1.8,cs:36,rcf:"WDWWW",pos:57},CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:79,rk:18,wc:5,fm:6,df:7,ho:0,xg:1.2,gpm:1.3,cs:34,rcf:"DWWDW",pos:54},GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:66,rk:44,wc:2,fm:5,df:4,ho:0,xg:0.9,gpm:1.0,cs:18,rcf:"WLDLD",pos:45},PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:58,rk:72,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:14,rcf:"LLDWL",pos:40},
 };
 
-// ── BETTING STATS HELPERS ──
 const AFF_LINK="https://refpa7921972.top/L?tag=d_3955339m_97c_&site=3955339&ad=97";
-
-// Generate realistic decimal odds from team ratings
-function calcOdds(a,b){
-  const sA=getStrength(a),sB=getStrength(b);
-  const pA=sA/(sA+sB); // win probability for A
-  const pB=sB/(sA+sB);
-  const pD=0.22; // draw probability ~22%
-  const adjA=Math.max(0.05,pA-pD/2);
-  const adjB=Math.max(0.05,pB-pD/2);
-  const margin=1.08; // bookmaker margin
-  return{
-    o1:(margin/adjA).toFixed(2),
-    oX:(margin/pD).toFixed(2),
-    o2:(margin/adjB).toFixed(2)
-  };
-}
-
-// Generate H2H stats from team codes (deterministic based on codes)
-function getH2H(a,b){
-  const seed=(a.c.charCodeAt(0)*31+a.c.charCodeAt(1)*17+b.c.charCodeAt(0)*13+b.c.charCodeAt(1)*7)%100;
-  const total=3+seed%6; // 3-8 meetings
-  const aWins=Math.round(total*(a.rt/(a.rt+b.rt)));
-  const bWins=Math.round(total*(b.rt/(a.rt+b.rt)));
-  const draws=Math.max(0,total-aWins-bWins);
-  return{total,aWins,draws,bWins};
-}
-
-// BTTS (Both Teams To Score) probability
-function calcBTTS(a,b){
-  const attackA=a.xg||1.0, attackB=b.xg||1.0;
-  const defA=1-((a.df||5)/10)*0.6, defB=1-((b.df||5)/10)*0.6;
-  const prob=Math.min(75,Math.max(25,Math.round((attackA*defB+attackB*defA)*25)));
-  return prob;
-}
-
-// Over/Under 2.5 probability
-function calcOU(a,b){
-  const totalXg=(a.xg||1.0)+(b.xg||1.0);
-  const over=Math.min(80,Math.max(20,Math.round(totalXg*28)));
-  return{over,under:100-over};
-}
-
-// Form color helper
-const formColor=(ch)=>ch==="W"?"#00a854":ch==="D"?"#fbb03b":"#d4145a";
 const GS=["A","B","C","D","E","F","G","H","I","J","K","L"];
 const gT=g=>Object.values(TM).filter(t=>t.g===g);
 const nm=(code,lg)=>TN[code]?.[lg]||code;
@@ -263,89 +218,6 @@ const BigBtn=({onClick,children,color=C.gn})=>(
     onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}>{children}</button>
 );
 
-// ── MATCH STATS PANEL ──
-const MatchStats=({a,b,lg})=>{
-  const odds=calcOdds(a,b);
-  const h2h=getH2H(a,b);
-  const btts=calcBTTS(a,b);
-  const ou=calcOU(a,b);
-  const nA=nm(a.c,lg||"fr"), nB=nm(b.c,lg||"fr");
-  const s={box:{background:"#f8f9fc",borderRadius:8,padding:"8px 10px",marginTop:6,fontSize:11},
-    row:{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"3px 0"},
-    label:{color:"#777",fontSize:10,fontWeight:600,letterSpacing:1},
-    val:{fontWeight:800,fontFamily:"'Oswald',sans-serif",fontSize:13},
-    odds:{display:"flex",gap:4,justifyContent:"center",marginTop:4},
-    oddBox:{flex:1,textAlign:"center",padding:"6px 4px",borderRadius:6,border:"1px solid #e2e5eb",background:"#fff",cursor:"pointer"},
-    form:{display:"inline-flex",gap:2},
-    dot:{width:16,height:16,borderRadius:4,display:"inline-flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:9,fontWeight:800},
-    affBtn:{display:"block",width:"100%",marginTop:6,padding:"8px",fontSize:11,fontWeight:800,fontFamily:"'Oswald',sans-serif",
-      letterSpacing:1,borderRadius:8,border:"none",cursor:"pointer",color:"#fff",
-      background:"linear-gradient(135deg,#d4145a,#ff6b35)",textAlign:"center",textDecoration:"none"}};
-  return(
-    <div style={s.box}>
-      {/* Odds */}
-      <div style={{...s.label,textAlign:"center",marginBottom:4}}>ODDS</div>
-      <div style={s.odds}>
-        <div style={s.oddBox}><div style={{fontSize:9,color:"#999"}}>1</div><div style={{...s.val,color:"#2563eb"}}>{odds.o1}</div></div>
-        <div style={s.oddBox}><div style={{fontSize:9,color:"#999"}}>X</div><div style={{...s.val,color:"#555"}}>{odds.oX}</div></div>
-        <div style={s.oddBox}><div style={{fontSize:9,color:"#999"}}>2</div><div style={{...s.val,color:"#2563eb"}}>{odds.o2}</div></div>
-      </div>
-      {/* Stats comparison */}
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,marginTop:6}}>
-        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
-          <div style={s.label}>xG/90</div>
-          <div style={s.row}><span>{a.f} {(a.xg||1.0).toFixed(1)}</span><span>{(b.xg||1.0).toFixed(1)} {b.f}</span></div>
-        </div>
-        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
-          <div style={s.label}>GOALS/MATCH</div>
-          <div style={s.row}><span>{(a.gpm||1.0).toFixed(1)}</span><span>{(b.gpm||1.0).toFixed(1)}</span></div>
-        </div>
-        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
-          <div style={s.label}>CLEAN SHEET %</div>
-          <div style={s.row}><span>{a.cs||20}%</span><span>{b.cs||20}%</span></div>
-        </div>
-        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
-          <div style={s.label}>POSSESSION</div>
-          <div style={s.row}><span>{a.pos||50}%</span><span>{b.pos||50}%</span></div>
-        </div>
-      </div>
-      {/* Form */}
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:6}}>
-        <div><div style={{...s.label,marginBottom:2}}>FORM</div>
-          <div style={s.form}>{(a.rcf||"DDDDD").split("").map((ch,i)=><span key={i} style={{...s.dot,background:formColor(ch)}}>{ch}</span>)}</div>
-        </div>
-        <div style={{textAlign:"right"}}><div style={{...s.label,marginBottom:2}}>FORM</div>
-          <div style={s.form}>{(b.rcf||"DDDDD").split("").map((ch,i)=><span key={i} style={{...s.dot,background:formColor(ch)}}>{ch}</span>)}</div>
-        </div>
-      </div>
-      {/* H2H */}
-      <div style={{marginTop:6,background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
-        <div style={s.label}>HEAD TO HEAD ({h2h.total} matches)</div>
-        <div style={{...s.row,fontSize:12}}><span>{a.f} {h2h.aWins}W</span><span>{h2h.draws}D</span><span>{h2h.bWins}W {b.f}</span></div>
-        <div style={{height:6,borderRadius:3,overflow:"hidden",display:"flex",marginTop:2}}>
-          <div style={{width:`${(h2h.aWins/h2h.total)*100}%`,background:"#2563eb"}}/>
-          <div style={{width:`${(h2h.draws/h2h.total)*100}%`,background:"#ccc"}}/>
-          <div style={{width:`${(h2h.bWins/h2h.total)*100}%`,background:"#d4145a"}}/>
-        </div>
-      </div>
-      {/* BTTS & O/U */}
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,marginTop:6}}>
-        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
-          <div style={s.label}>BTTS</div>
-          <div style={{...s.val,color:btts>50?"#00a854":"#d4145a"}}>{btts}% YES</div>
-        </div>
-        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
-          <div style={s.label}>O/U 2.5</div>
-          <div style={s.row}><span style={{...s.val,color:"#2563eb",fontSize:11}}>O {ou.over}%</span><span style={{...s.val,color:"#555",fontSize:11}}>U {ou.under}%</span></div>
-        </div>
-      </div>
-      {/* Affiliate CTA */}
-      <a href={AFF_LINK} target="_blank" rel="noopener noreferrer" style={s.affBtn}>
-        🎰 BET ON THIS MATCH →
-      </a>
-    </div>
-  );
-};
 
 // ════════════════════════════════════════════
 // MAIN APP
@@ -649,9 +521,6 @@ export default function App(){
                 <Btn onClick={()=>{const el1=document.getElementById(`a${sid}`),el2=document.getElementById(`b${sid}`);if(el1&&el2)setGMatch(g,idx,{t1:f.t1,t2:f.t2,g1:+el1.value,g2:+el2.value,p1:null,p2:null,et:false})}} color={C.gn}>{L.ok}</Btn>
                 <Btn onClick={()=>{const r=simM(f.t1,f.t2);setGMatch(g,idx,{t1:f.t1,t2:f.t2,...r})}} color={C.bl}>{L.simOne}</Btn>
               </div>)}
-              <details style={{marginTop:4}}><summary style={{cursor:"pointer",fontSize:11,color:C.bl,fontWeight:700}}>📊 Stats & Odds</summary>
-                <MatchStats a={f.t1} b={f.t2} lg={lang}/>
-              </details>
             </div>)})}
         </div>)})}
     </div>
@@ -705,9 +574,6 @@ export default function App(){
                   <span style={{display:"flex",alignItems:"center",gap:5}}><span style={{fontSize:big?22:16}}>{t.f}</span>{big?N(t):t.c}</span>
                   <span style={{fontWeight:900,fontFamily:"'Oswald',sans-serif",fontSize:big?22:16}}>{g}{p!=null?<span style={{fontSize:10,opacity:.5}}>({p})</span>:""}</span>
                 </div>))}
-              <details style={{marginTop:4}}><summary style={{cursor:"pointer",fontSize:10,color:C.bl,fontWeight:700}}>📊 Stats & Odds</summary>
-                <MatchStats a={m.t1} b={m.t2} lg={lang}/>
-              </details>
             </div>)})}
         </div>
       </div>))}
@@ -738,9 +604,6 @@ export default function App(){
               {dn?.c===t.c&&<span style={{color:C.gn,fontWeight:900,fontSize:16}}>✓</span>}
             </div>))}
           {!dn&&<button onClick={()=>kSim(m)} style={{width:"100%",marginTop:5,padding:"6px",fontSize:12,fontWeight:700,borderRadius:8,border:`1px solid ${C.bl}`,background:`${C.bl}11`,color:C.bl,cursor:"pointer"}}>{L.simOne}</button>}
-          <details style={{marginTop:4}}><summary style={{cursor:"pointer",fontSize:10,color:C.bl,fontWeight:700}}>📊 Stats & Odds</summary>
-            <MatchStats a={m.t1} b={m.t2} lg={lang}/>
-          </details>
         </div>)})}
     </div>
     {canAdv&&(<div className="pop" style={{textAlign:"center",marginBottom:18}}>
