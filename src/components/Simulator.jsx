@@ -363,19 +363,69 @@ export default function App(){
 
   // ══════ LANGUAGE SELECT ══════
   if(!lang) return(
-    <div style={{minHeight:"100vh",background:`linear-gradient(160deg,${C.bg},#e8edf5)`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Manrope',sans-serif",padding:20}}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;800&family=Manrope:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}`}</style>
-      <div style={{fontSize:60,marginBottom:16}}>⚽</div>
-      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:"clamp(24px,6vw,32px)",fontWeight:800,color:C.tx,letterSpacing:3,textAlign:"center"}}>FIFA WORLD CUP 2026</div>
-      <div style={{fontSize:14,color:C.t2,marginBottom:32,letterSpacing:2}}>USA • MEXICO • CANADA</div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,maxWidth:480,width:"100%"}}>
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0a1628 0%,#1a2a4a 50%,#0d1f3c 100%)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Manrope',sans-serif",padding:20,position:"relative",overflow:"hidden"}}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;800&family=Manrope:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}
+      @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(10deg)}}
+      @keyframes glow{0%,100%{text-shadow:0 0 20px rgba(251,176,59,0.3)}50%{text-shadow:0 0 40px rgba(251,176,59,0.6),0 0 80px rgba(251,176,59,0.2)}}
+      @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+      @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+      .lang-btn:hover{border-color:rgba(212,20,90,0.8)!important;transform:scale(1.05)!important;box-shadow:0 8px 32px rgba(212,20,90,0.3)!important;background:rgba(255,255,255,0.15)!important}
+      `}</style>
+      {/* Background glow effect */}
+      <div style={{position:"absolute",width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(212,20,90,0.12) 0%,transparent 70%)",top:"-10%",right:"-10%",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",width:400,height:400,borderRadius:"50%",background:"radial-gradient(circle,rgba(251,176,59,0.08) 0%,transparent 70%)",bottom:"-5%",left:"-5%",pointerEvents:"none"}}/>
+
+      {/* Soccer ball */}
+      <div style={{fontSize:72,marginBottom:20,animation:"float 3s ease-in-out infinite",filter:"drop-shadow(0 10px 30px rgba(251,176,59,0.3))"}}>⚽</div>
+
+      {/* Title */}
+      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:"clamp(28px,7vw,44px)",fontWeight:800,letterSpacing:4,textAlign:"center",
+        background:"linear-gradient(135deg,#ffffff 0%,#fbb03b 50%,#ffffff 100%)",backgroundSize:"200% auto",
+        WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
+        animation:"glow 3s ease-in-out infinite"}}>
+        FIFA WORLD CUP 2026
+      </div>
+
+      {/* Subtitle */}
+      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:"clamp(13px,3vw,16px)",letterSpacing:6,marginTop:6,
+        background:"linear-gradient(90deg,#9999bb,#ffffff,#9999bb)",backgroundSize:"200% auto",
+        WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
+        animation:"shimmer 4s linear infinite"}}>
+        USA • MEXICO • CANADA
+      </div>
+
+      {/* Tagline */}
+      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:12,letterSpacing:4,color:"#fbb03b",marginTop:10,marginBottom:28,opacity:0.8}}>
+        SIMULATE THE TOURNAMENT
+      </div>
+
+      {/* Language buttons — glassmorphism */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,maxWidth:500,width:"100%",animation:"fadeUp 0.6s ease-out"}}>
         {Object.entries(LANGS).map(([k,v])=>(
-          <button key={k} onClick={()=>setLang(k)} style={{padding:"18px 10px",borderRadius:14,border:`2px solid ${C.bd}`,background:C.cd,cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:8,transition:"all 0.2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.borderColor=C.ac;e.currentTarget.style.transform="scale(1.03)"}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor=C.bd;e.currentTarget.style.transform="scale(1)"}}>
-            <span style={{fontSize:34}}>{v.flag}</span>
-            <span style={{fontFamily:"'Oswald',sans-serif",fontSize:15,fontWeight:700,color:C.tx}}>{v.label}</span>
+          <button key={k} className="lang-btn" onClick={()=>setLang(k)} style={{padding:"20px 10px",borderRadius:16,
+            border:"1px solid rgba(255,255,255,0.15)",background:"rgba(255,255,255,0.07)",
+            backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",
+            cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:8,
+            transition:"all 0.3s ease",boxShadow:"0 4px 16px rgba(0,0,0,0.2)"}}>
+            <span style={{fontSize:42}}>{v.flag}</span>
+            <span style={{fontFamily:"'Oswald',sans-serif",fontSize:14,fontWeight:700,color:"#fff",letterSpacing:1}}>{v.label}</span>
           </button>))}
+      </div>
+
+      {/* Stats bar */}
+      <div style={{display:"flex",gap:24,marginTop:28,animation:"fadeUp 0.8s ease-out"}}>
+        {[["48","TEAMS"],["12","GROUPS"],["104","MATCHES"]].map(([num,label])=>(
+          <div key={label} style={{textAlign:"center"}}>
+            <div style={{fontFamily:"'Oswald',sans-serif",fontSize:22,fontWeight:800,color:"#fbb03b"}}>{num}</div>
+            <div style={{fontSize:9,letterSpacing:2,color:"rgba(255,255,255,0.5)",fontWeight:600}}>{label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <div style={{position:"absolute",bottom:16,fontFamily:"'Oswald',sans-serif",fontSize:9,letterSpacing:1,color:"rgba(255,255,255,0.3)"}}>
+        WORLD CUP 2026 SIMULATOR — ZOUHAIRE EL MATAR{" "}
+        <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:11}}>💬</a>
       </div>
     </div>
   );
@@ -412,16 +462,34 @@ export default function App(){
     </div>
   </div>
 
+  {/* ── STATS STRIP ── */}
+  {!mode&&(
+  <div className="fu" style={{display:"flex",justifyContent:"center",gap:32,padding:"16px",background:`linear-gradient(135deg,${C.ac}08,${C.a2}08)`,borderBottom:`1px solid ${C.bd}`}}>
+    {[["48",L.teams],["12",L.groups?.replace(/.*?/,"") || "GROUPS"],["104","MATCHES"]].map(([num,label])=>(
+      <div key={num} style={{textAlign:"center"}}>
+        <div style={{fontFamily:"'Oswald',sans-serif",fontSize:24,fontWeight:800,color:C.ac}}>{num}</div>
+        <div style={{fontSize:10,letterSpacing:2,color:C.t3,fontWeight:600}}>{label}</div>
+      </div>
+    ))}
+  </div>)}
+
   {/* ── MODE SELECT ── */}
   {!mode&&(
-  <div className="fu" style={{display:"flex",flexDirection:"column",alignItems:"center",gap:14,padding:"28px 16px",maxWidth:540,margin:"0 auto"}}>
+  <div className="fu" style={{display:"flex",flexDirection:"column",alignItems:"center",gap:14,padding:"28px 16px",maxWidth:560,margin:"0 auto"}}>
     <div style={{fontFamily:"'Oswald',sans-serif",fontSize:22,letterSpacing:3,color:C.t2}}>{L.chooseMode}</div>
-    {[["auto",L.auto,L.autoD,C.ac],["manual",L.manual,L.manualD,C.bl],["quick",L.quick,L.quickD,C.gn]].map(([m,t,d,col])=>(
-      <button key={m} onClick={()=>m==="auto"?doAuto():setMode(m)} style={{width:"100%",padding:"22px",borderRadius:16,border:`2px solid ${col}22`,background:C.cd,cursor:"pointer",textAlign:rtl?"right":"left",transition:"all 0.2s",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}
-        onMouseEnter={e=>{e.currentTarget.style.borderColor=col;e.currentTarget.style.transform="translateY(-2px)"}}
-        onMouseLeave={e=>{e.currentTarget.style.borderColor=col+"22";e.currentTarget.style.transform="translateY(0)"}}>
-        <div style={{fontFamily:"'Oswald',sans-serif",fontSize:22,fontWeight:700,letterSpacing:2,color:C.tx}}>{t}</div>
-        <div style={{fontSize:14,color:C.t2,marginTop:5}}>{d}</div>
+    {[["auto",L.auto,L.autoD,C.ac,"🎯"],["manual",L.manual,L.manualD,C.bl,"⚙️"],["quick",L.quick,L.quickD,C.gn,"🚀"]].map(([m,t,d,col,icon])=>(
+      <button key={m} onClick={()=>m==="auto"?doAuto():setMode(m)} style={{width:"100%",padding:"22px 22px 22px 26px",borderRadius:16,
+        border:`1px solid ${C.bd}`,borderLeft:`4px solid ${col}`,
+        background:`linear-gradient(135deg,${C.cd},${col}06)`,
+        cursor:"pointer",textAlign:rtl?"right":"left",transition:"all 0.25s ease",
+        boxShadow:"0 2px 12px rgba(0,0,0,0.04)",display:"flex",alignItems:"center",gap:16}}
+        onMouseEnter={e=>{e.currentTarget.style.borderColor=col;e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow=`0 8px 24px ${col}22`}}
+        onMouseLeave={e=>{e.currentTarget.style.borderColor=C.bd;e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 2px 12px rgba(0,0,0,0.04)"}}>
+        <div style={{fontSize:32,width:48,textAlign:"center",flexShrink:0}}>{icon}</div>
+        <div>
+          <div style={{fontFamily:"'Oswald',sans-serif",fontSize:20,fontWeight:700,letterSpacing:2,color:C.tx}}>{t}</div>
+          <div style={{fontSize:13,color:C.t2,marginTop:4}}>{d}</div>
+        </div>
       </button>))}
   </div>)}
 
