@@ -1,5 +1,4 @@
 import Layout from './Layout'
-import { useTheme } from '../ThemeContext.jsx'
 
 const SCHEDULE = [
   { phase: 'Group Stage', dates: 'June 11 — June 28, 2026', matches: 96, desc: '48 teams play 3 matches each across 12 groups. 16 venues in USA, Mexico & Canada.' },
@@ -31,39 +30,38 @@ const VENUES = [
 ]
 
 export default function Schedule() {
-  const { C } = useTheme();
   return (
     <Layout title="World Cup 2026 Schedule — Calendrier CDM 2026">
-      <p style={{ textAlign: 'center', color: C.t2, marginBottom: 32, fontSize: 15, lineHeight: 1.7 }}>
+      <p style={{ textAlign: 'center', color: '#555577', marginBottom: 32, fontSize: 15, lineHeight: 1.7 }}>
         The 2026 FIFA World Cup runs from June 11 to July 19, 2026.
         104 matches across 16 venues in 3 countries. The biggest World Cup ever.
       </p>
 
-      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: C.tx, marginBottom: 16 }}>Tournament Phases</h2>
+      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: '#1a1a2e', marginBottom: 16 }}>Tournament Phases</h2>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 40 }}>
         {SCHEDULE.map(s => (
-          <div key={s.phase} style={{ background: C.cd, borderRadius: 12, padding: '16px 20px', border: `1px solid ${C.bd}` }}>
+          <div key={s.phase} style={{ background: '#fff', borderRadius: 12, padding: '16px 20px', border: '1px solid #E2E5EB' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
               <div>
-                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, fontWeight: 700, color: C.ac }}>{s.phase}</div>
-                <div style={{ fontSize: 13, color: C.t2, marginTop: 2 }}>{s.desc}</div>
+                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, fontWeight: 700, color: '#d4145a' }}>{s.phase}</div>
+                <div style={{ fontSize: 13, color: '#555577', marginTop: 2 }}>{s.desc}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 14, color: C.tx }}>{s.dates}</div>
-                <div style={{ fontSize: 12, color: C.t3 }}>{s.matches} match{s.matches > 1 ? 'es' : ''}</div>
+                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 14, color: '#1a1a2e' }}>{s.dates}</div>
+                <div style={{ fontSize: 12, color: '#9999bb' }}>{s.matches} match{s.matches > 1 ? 'es' : ''}</div>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: C.tx, marginBottom: 16 }}>Venues</h2>
+      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: '#1a1a2e', marginBottom: 16 }}>Venues</h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))', gap: 10 }}>
         {VENUES.map(v => (
-          <div key={v.city} style={{ background: C.cd, borderRadius: 12, padding: '14px 18px', border: `1px solid ${C.bd}` }}>
-            <div style={{ fontWeight: 700, fontSize: 15, color: C.tx }}>{v.city}</div>
-            <div style={{ fontSize: 13, color: C.t2 }}>{v.stadium} — {v.capacity}</div>
-            <div style={{ fontSize: 12, color: C.ac, fontWeight: 600, marginTop: 4 }}>{v.role}</div>
+          <div key={v.city} style={{ background: '#fff', borderRadius: 12, padding: '14px 18px', border: '1px solid #E2E5EB' }}>
+            <div style={{ fontWeight: 700, fontSize: 15, color: '#1a1a2e' }}>{v.city}</div>
+            <div style={{ fontSize: 13, color: '#555577' }}>{v.stadium} — {v.capacity}</div>
+            <div style={{ fontSize: 12, color: '#d4145a', fontWeight: 600, marginTop: 4 }}>{v.role}</div>
           </div>
         ))}
       </div>

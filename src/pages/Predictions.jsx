@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import Layout from './Layout'
-import { useTheme } from '../ThemeContext.jsx'
 
 const FAVORITES = [
   { flag: '🇪🇸', name: 'Spain', rank: 1, odds: '+450', prob: '15.4%', why: 'Reigning champions, dominant possession, youngest squad among favorites.' },
@@ -21,53 +20,52 @@ const DARKHORSES = [
 ]
 
 export default function Predictions() {
-  const { C } = useTheme();
   return (
     <Layout title="World Cup 2026 Predictions — Pronostics CDM 2026">
-      <p style={{ textAlign: 'center', color: C.t2, marginBottom: 32, fontSize: 15, lineHeight: 1.7 }}>
+      <p style={{ textAlign: 'center', color: '#555577', marginBottom: 32, fontSize: 15, lineHeight: 1.7 }}>
         Who will win the 2026 FIFA World Cup? Here are the top favorites, dark horses,
         and odds for the biggest tournament in football history.
       </p>
 
-      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: C.tx, marginBottom: 16 }}>Top Favorites</h2>
+      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: '#1a1a2e', marginBottom: 16 }}>Top Favorites</h2>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 40 }}>
         {FAVORITES.map(t => (
-          <div key={t.name} style={{ background: C.cd, borderRadius: 14, padding: '16px 20px', border: `1px solid ${C.bd}`, display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <div key={t.name} style={{ background: '#fff', borderRadius: 14, padding: '16px 20px', border: '1px solid #E2E5EB', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 36 }}>{t.flag}</span>
             <div style={{ flex: 1, minWidth: 180 }}>
               <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, fontWeight: 700 }}>{t.name}</div>
-              <div style={{ fontSize: 13, color: C.t2, marginTop: 2 }}>{t.why}</div>
+              <div style={{ fontSize: 13, color: '#555577', marginTop: 2 }}>{t.why}</div>
             </div>
             <div style={{ textAlign: 'center', minWidth: 80 }}>
-              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, fontWeight: 800, color: C.ac }}>{t.prob}</div>
-              <div style={{ fontSize: 11, color: C.t3 }}>Odds: {t.odds}</div>
-              <div style={{ fontSize: 11, color: C.t3 }}>FIFA #{t.rank}</div>
+              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, fontWeight: 800, color: '#d4145a' }}>{t.prob}</div>
+              <div style={{ fontSize: 11, color: '#9999bb' }}>Odds: {t.odds}</div>
+              <div style={{ fontSize: 11, color: '#9999bb' }}>FIFA #{t.rank}</div>
             </div>
           </div>
         ))}
       </div>
 
-      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: C.tx, marginBottom: 16 }}>Dark Horses</h2>
+      <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 2, color: '#1a1a2e', marginBottom: 16 }}>Dark Horses</h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(250px,1fr))', gap: 10, marginBottom: 40 }}>
         {DARKHORSES.map(t => (
-          <div key={t.name} style={{ background: C.cd, borderRadius: 14, padding: '16px 18px', border: `1px solid ${C.bd}` }}>
+          <div key={t.name} style={{ background: '#fff', borderRadius: 14, padding: '16px 18px', border: '1px solid #E2E5EB' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
               <span style={{ fontSize: 30 }}>{t.flag}</span>
               <div>
                 <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, fontWeight: 700 }}>{t.name}</div>
-                <div style={{ fontSize: 11, color: C.t3 }}>FIFA #{t.rank} • Odds: {t.odds}</div>
+                <div style={{ fontSize: 11, color: '#9999bb' }}>FIFA #{t.rank} • Odds: {t.odds}</div>
               </div>
             </div>
-            <div style={{ fontSize: 13, color: C.t2 }}>{t.why}</div>
+            <div style={{ fontSize: 13, color: '#555577' }}>{t.why}</div>
           </div>
         ))}
       </div>
 
-      <div style={{ textAlign: 'center', padding: '24px', background: C.cd, borderRadius: 16, border: `2px solid ${C.ac}22` }}>
+      <div style={{ textAlign: 'center', padding: '24px', background: '#fff', borderRadius: 16, border: '2px solid #d4145a22' }}>
         <div style={{ fontSize: 28, marginBottom: 8 }}>⚽</div>
         <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Make Your Own Prediction!</div>
-        <p style={{ fontSize: 14, color: C.t2, marginBottom: 16 }}>Run the simulator and see who wins your World Cup 2026.</p>
-        <Link to="/" style={{ display: 'inline-block', padding: '14px 36px', fontSize: 16, fontWeight: 800, fontFamily: "'Oswald',sans-serif", letterSpacing: 3, border: 'none', borderRadius: 50, color: C.cd, background: `linear-gradient(135deg,${C.ac},${C.ac}cc)`, textDecoration: 'none' }}>
+        <p style={{ fontSize: 14, color: '#555577', marginBottom: 16 }}>Run the simulator and see who wins your World Cup 2026.</p>
+        <Link to="/" style={{ display: 'inline-block', padding: '14px 36px', fontSize: 16, fontWeight: 800, fontFamily: "'Oswald',sans-serif", letterSpacing: 3, border: 'none', borderRadius: 50, color: '#fff', background: 'linear-gradient(135deg,#d4145a,#d4145acc)', textDecoration: 'none' }}>
           SIMULATE NOW
         </Link>
       </div>

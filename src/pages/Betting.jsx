@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Layout from './Layout'
-import { useTheme } from '../ThemeContext.jsx'
 
 const AFF_LINK="https://refpa7921972.top/L?tag=d_3955339m_97c_&site=3955339&ad=97";
 
@@ -74,10 +73,11 @@ function calcOU(a,b){
 
 const formColor=(ch)=>ch==="W"?"#00a854":ch==="D"?"#fbb03b":"#d4145a";
 
-// Colors now come from theme context via props
+const C={bg:"#FAFBFD",b2:"#F0F2F6",cd:"#FFFFFF",tx:"#1a1a2e",t2:"#555577",t3:"#9999bb",
+  ac:"#d4145a",a2:"#fbb03b",gn:"#00a854",bd:"#E2E5EB",bl:"#2563eb"};
 
 // ── MATCH CARD ──
-function MatchCard({a,b,liveOdds,C}){
+function MatchCard({a,b,liveOdds}){
   const fallback=calcOdds(a,b);
   const odds=liveOdds||fallback;
   const isLive=!!liveOdds;
@@ -213,7 +213,6 @@ function MatchCard({a,b,liveOdds,C}){
 }
 
 export default function Betting(){
-  const {C}=useTheme();
   const [selectedGroup,setSelectedGroup]=useState("ALL");
   const [liveOdds,setLiveOdds]=useState({});
   const [oddsStatus,setOddsStatus]=useState("loading"); // loading, live, fallback
@@ -306,7 +305,7 @@ export default function Betting(){
             <div style={{fontFamily:"'Oswald',sans-serif",fontSize:11,letterSpacing:2,color:C.a2,fontWeight:700,marginBottom:4,textAlign:"center"}}>
               GROUP {m.g}
             </div>
-            <MatchCard a={m.a} b={m.b} liveOdds={liveOdds[m.a.c+"_"+m.b.c]} C={C}/>
+            <MatchCard a={m.a} b={m.b} liveOdds={liveOdds[m.a.c+"_"+m.b.c]}/>
           </div>
         ))}
       </div>

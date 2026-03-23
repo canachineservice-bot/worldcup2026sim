@@ -1,6 +1,5 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useTheme } from "../ThemeContext.jsx";
 
 /* ═══════════════════════════════════════════════════════════
    FIFA WORLD CUP 2026 SIMULATOR — Production v7
@@ -206,8 +205,8 @@ function buildBracket(tb){
   };
 }
 
-// ── COLORS (fallback, overridden by theme context in App) ──
-const C_FALLBACK={bg:"#FAFBFD",b2:"#F0F2F6",cd:"#FFFFFF",tx:"#1a1a2e",t2:"#555577",t3:"#9999bb",
+// ── COLORS ──
+const C={bg:"#FAFBFD",b2:"#F0F2F6",cd:"#FFFFFF",tx:"#1a1a2e",t2:"#555577",t3:"#9999bb",
   ac:"#d4145a",a2:"#fbb03b",gn:"#00a854",bd:"#E2E5EB",bl:"#2563eb"};
 
 // ── REUSABLE BUTTON COMPONENTS (outside render) ──
@@ -225,8 +224,6 @@ const BigBtn=({onClick,children,color=C.gn})=>(
 // MAIN APP
 // ════════════════════════════════════════════
 export default function App(){
-  const{dark,toggle,C:themeC}=useTheme();
-  const C=themeC||C_FALLBACK;
   const[lang,setLang]=useState(null);
   const[mode,setMode]=useState(null);
   const[gm,setGm]=useState({});
@@ -366,69 +363,19 @@ export default function App(){
 
   // ══════ LANGUAGE SELECT ══════
   if(!lang) return(
-    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0a1628 0%,#1a2a4a 50%,#0d1f3c 100%)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Manrope',sans-serif",padding:20,position:"relative",overflow:"hidden"}}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;800&family=Manrope:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}
-      @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(10deg)}}
-      @keyframes glow{0%,100%{text-shadow:0 0 20px rgba(251,176,59,0.3)}50%{text-shadow:0 0 40px rgba(251,176,59,0.6),0 0 80px rgba(251,176,59,0.2)}}
-      @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
-      @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-      .lang-btn:hover{border-color:rgba(212,20,90,0.8)!important;transform:scale(1.05)!important;box-shadow:0 8px 32px rgba(212,20,90,0.3)!important;background:rgba(255,255,255,0.15)!important}
-      `}</style>
-      {/* Background glow effect */}
-      <div style={{position:"absolute",width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(212,20,90,0.12) 0%,transparent 70%)",top:"-10%",right:"-10%",pointerEvents:"none"}}/>
-      <div style={{position:"absolute",width:400,height:400,borderRadius:"50%",background:"radial-gradient(circle,rgba(251,176,59,0.08) 0%,transparent 70%)",bottom:"-5%",left:"-5%",pointerEvents:"none"}}/>
-
-      {/* Soccer ball */}
-      <div style={{fontSize:72,marginBottom:20,animation:"float 3s ease-in-out infinite",filter:"drop-shadow(0 10px 30px rgba(251,176,59,0.3))"}}>⚽</div>
-
-      {/* Title */}
-      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:"clamp(28px,7vw,44px)",fontWeight:800,letterSpacing:4,textAlign:"center",
-        background:"linear-gradient(135deg,#ffffff 0%,#fbb03b 50%,#ffffff 100%)",backgroundSize:"200% auto",
-        WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
-        animation:"glow 3s ease-in-out infinite"}}>
-        FIFA WORLD CUP 2026
-      </div>
-
-      {/* Subtitle */}
-      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:"clamp(13px,3vw,16px)",letterSpacing:6,marginTop:6,
-        background:"linear-gradient(90deg,#9999bb,#ffffff,#9999bb)",backgroundSize:"200% auto",
-        WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
-        animation:"shimmer 4s linear infinite"}}>
-        USA • MEXICO • CANADA
-      </div>
-
-      {/* Tagline */}
-      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:12,letterSpacing:4,color:"#fbb03b",marginTop:10,marginBottom:28,opacity:0.8}}>
-        SIMULATE THE TOURNAMENT
-      </div>
-
-      {/* Language buttons — glassmorphism */}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,maxWidth:500,width:"100%",animation:"fadeUp 0.6s ease-out"}}>
+    <div style={{minHeight:"100vh",background:`linear-gradient(160deg,${C.bg},#e8edf5)`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Manrope',sans-serif",padding:20}}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;800&family=Manrope:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}`}</style>
+      <div style={{fontSize:60,marginBottom:16}}>⚽</div>
+      <div style={{fontFamily:"'Oswald',sans-serif",fontSize:"clamp(24px,6vw,32px)",fontWeight:800,color:C.tx,letterSpacing:3,textAlign:"center"}}>FIFA WORLD CUP 2026</div>
+      <div style={{fontSize:14,color:C.t2,marginBottom:32,letterSpacing:2}}>USA • MEXICO • CANADA</div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,maxWidth:480,width:"100%"}}>
         {Object.entries(LANGS).map(([k,v])=>(
-          <button key={k} className="lang-btn" onClick={()=>setLang(k)} style={{padding:"20px 10px",borderRadius:16,
-            border:"1px solid rgba(255,255,255,0.15)",background:"rgba(255,255,255,0.07)",
-            backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",
-            cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:8,
-            transition:"all 0.3s ease",boxShadow:"0 4px 16px rgba(0,0,0,0.2)"}}>
-            <span style={{fontSize:42}}>{v.flag}</span>
-            <span style={{fontFamily:"'Oswald',sans-serif",fontSize:14,fontWeight:700,color:"#fff",letterSpacing:1}}>{v.label}</span>
+          <button key={k} onClick={()=>setLang(k)} style={{padding:"18px 10px",borderRadius:14,border:`2px solid ${C.bd}`,background:C.cd,cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:8,transition:"all 0.2s"}}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor=C.ac;e.currentTarget.style.transform="scale(1.03)"}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor=C.bd;e.currentTarget.style.transform="scale(1)"}}>
+            <span style={{fontSize:34}}>{v.flag}</span>
+            <span style={{fontFamily:"'Oswald',sans-serif",fontSize:15,fontWeight:700,color:C.tx}}>{v.label}</span>
           </button>))}
-      </div>
-
-      {/* Stats bar */}
-      <div style={{display:"flex",gap:24,marginTop:28,animation:"fadeUp 0.8s ease-out"}}>
-        {[["48","TEAMS"],["12","GROUPS"],["104","MATCHES"]].map(([num,label])=>(
-          <div key={label} style={{textAlign:"center"}}>
-            <div style={{fontFamily:"'Oswald',sans-serif",fontSize:22,fontWeight:800,color:"#fbb03b"}}>{num}</div>
-            <div style={{fontSize:9,letterSpacing:2,color:"rgba(255,255,255,0.5)",fontWeight:600}}>{label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Footer */}
-      <div style={{position:"absolute",bottom:16,fontFamily:"'Oswald',sans-serif",fontSize:9,letterSpacing:1,color:"rgba(255,255,255,0.3)"}}>
-        WORLD CUP 2026 SIMULATOR — ZOUHAIRE EL MATAR{" "}
-        <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:11}}>💬</a>
       </div>
     </div>
   );
@@ -459,7 +406,6 @@ export default function App(){
       ))}
     </div>
     <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:6,flexWrap:"wrap"}}>
-      <Btn onClick={toggle} color={C.a2}>{dark?"☀️":"🌙"}</Btn>
       <Btn onClick={()=>{setLang(null);fullReset()}} color={C.t3}>{L.chLang}</Btn>
       {mode&&<Btn onClick={fullReset} color={C.t2}>{L.chMode}</Btn>}
       {mode&&<Btn onClick={()=>{const m=mode;fullReset();setTimeout(()=>{if(m==="auto")doAuto();else setMode(m)},50)}} color={C.ac}>{L.resim}</Btn>}
