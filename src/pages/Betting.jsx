@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Layout from './Layout'
+import { useTheme } from '../ThemeContext.jsx'
 
 const AFF_LINK="https://refpa7921972.top/L?tag=d_3955339m_97c_&site=3955339&ad=97";
 
@@ -73,11 +74,10 @@ function calcOU(a,b){
 
 const formColor=(ch)=>ch==="W"?"#00a854":ch==="D"?"#fbb03b":"#d4145a";
 
-const C={bg:"#FAFBFD",cd:"#FFFFFF",tx:"#1a1a2e",t2:"#555577",t3:"#9999bb",
-  ac:"#d4145a",a2:"#fbb03b",gn:"#00a854",bd:"#E2E5EB",bl:"#2563eb"};
+// Colors now come from theme context via props
 
 // ── MATCH CARD ──
-function MatchCard({a,b,liveOdds}){
+function MatchCard({a,b,liveOdds,C}){
   const fallback=calcOdds(a,b);
   const odds=liveOdds||fallback;
   const isLive=!!liveOdds;
@@ -113,7 +113,7 @@ function MatchCard({a,b,liveOdds}){
       </div>
       <div style={{display:"flex",gap:6,marginBottom:12}}>
         {[["1",odds.o1,C.bl],["X",odds.oX,"#555"],["2",odds.o2,C.ac]].map(([label,val,col])=>(
-          <div key={label} style={{flex:1,textAlign:"center",padding:"10px 4px",borderRadius:10,border:`1px solid ${isLive?C.gn:C.bd}`,background:isLive?"#f0fdf4":"#f8f9fc"}}>
+          <div key={label} style={{flex:1,textAlign:"center",padding:"10px 4px",borderRadius:10,border:`1px solid ${isLive?C.gn:C.bd}`,background:isLive?`${C.gn}10`:C.b2}}>
             <div style={{fontSize:10,color:C.t3,fontWeight:600}}>{label}</div>
             <div style={{fontFamily:"'Oswald',sans-serif",fontSize:20,fontWeight:800,color:col}}>{val}</div>
           </div>
@@ -128,7 +128,7 @@ function MatchCard({a,b,liveOdds}){
           ["Clean Sheet %",a.cs+"%",b.cs+"%"],
           ["Possession",a.pos+"%",b.pos+"%"],
         ].map(([label,vA,vB])=>(
-          <div key={label} style={{background:"#f8f9fc",borderRadius:8,padding:"8px 10px",border:"1px solid #eee"}}>
+          <div key={label} style={{background:C.b2,borderRadius:8,padding:"8px 10px",border:`1px solid ${C.bd}`}}>
             <div style={{fontSize:9,color:C.t3,fontWeight:700,letterSpacing:1,marginBottom:4}}>{label}</div>
             <div style={{display:"flex",justifyContent:"space-between",fontSize:13,fontWeight:700}}>
               <span style={{color:parseFloat(vA)>=parseFloat(vB)?C.gn:C.t2}}>{vA}</span>
@@ -139,7 +139,7 @@ function MatchCard({a,b,liveOdds}){
       </div>
 
       {/* Form */}
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12,padding:"8px 10px",background:"#f8f9fc",borderRadius:8}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12,padding:"8px 10px",background:C.b2,borderRadius:8}}>
         <div>
           <div style={{fontSize:9,color:C.t3,fontWeight:700,letterSpacing:1,marginBottom:4}}>FORM {a.c}</div>
           <div style={{display:"flex",gap:3}}>
@@ -159,7 +159,7 @@ function MatchCard({a,b,liveOdds}){
       </div>
 
       {/* H2H */}
-      <div style={{background:"#f8f9fc",borderRadius:8,padding:"8px 10px",marginBottom:12,border:"1px solid #eee"}}>
+      <div style={{background:C.b2,borderRadius:8,padding:"8px 10px",marginBottom:12,border:`1px solid ${C.bd}`}}>
         <div style={{fontSize:9,color:C.t3,fontWeight:700,letterSpacing:1,marginBottom:4}}>HEAD TO HEAD — {h2h.total} MATCHES</div>
         <div style={{display:"flex",justifyContent:"space-between",fontSize:13,fontWeight:700,marginBottom:4}}>
           <span style={{color:C.bl}}>{a.f} {h2h.aWins}W</span>
@@ -168,14 +168,14 @@ function MatchCard({a,b,liveOdds}){
         </div>
         <div style={{height:8,borderRadius:4,overflow:"hidden",display:"flex"}}>
           <div style={{width:`${(h2h.aWins/h2h.total)*100}%`,background:C.bl,transition:"width .3s"}}/>
-          <div style={{width:`${(h2h.draws/h2h.total)*100}%`,background:"#ddd"}}/>
+          <div style={{width:`${(h2h.draws/h2h.total)*100}%`,background:C.bd}}/>
           <div style={{width:`${(h2h.bWins/h2h.total)*100}%`,background:C.ac,transition:"width .3s"}}/>
         </div>
       </div>
 
       {/* BTTS & O/U */}
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:12}}>
-        <div style={{background:"#f8f9fc",borderRadius:8,padding:"8px 10px",border:"1px solid #eee"}}>
+        <div style={{background:C.b2,borderRadius:8,padding:"8px 10px",border:`1px solid ${C.bd}`}}>
           <div style={{fontSize:9,color:C.t3,fontWeight:700,letterSpacing:1}}>BTTS</div>
           <div style={{display:"flex",justifyContent:"space-between",marginTop:4}}>
             <span style={{fontFamily:"'Oswald',sans-serif",fontSize:16,fontWeight:800,color:btts>50?C.gn:C.ac}}>YES {btts}%</span>
@@ -183,10 +183,10 @@ function MatchCard({a,b,liveOdds}){
           </div>
           <div style={{height:6,borderRadius:3,overflow:"hidden",display:"flex",marginTop:4}}>
             <div style={{width:`${btts}%`,background:C.gn}}/>
-            <div style={{width:`${100-btts}%`,background:"#ddd"}}/>
+            <div style={{width:`${100-btts}%`,background:C.bd}}/>
           </div>
         </div>
-        <div style={{background:"#f8f9fc",borderRadius:8,padding:"8px 10px",border:"1px solid #eee"}}>
+        <div style={{background:C.b2,borderRadius:8,padding:"8px 10px",border:`1px solid ${C.bd}`}}>
           <div style={{fontSize:9,color:C.t3,fontWeight:700,letterSpacing:1}}>OVER / UNDER 2.5</div>
           <div style={{display:"flex",justifyContent:"space-between",marginTop:4}}>
             <span style={{fontFamily:"'Oswald',sans-serif",fontSize:16,fontWeight:800,color:C.bl}}>O {ou.over}%</span>
@@ -194,7 +194,7 @@ function MatchCard({a,b,liveOdds}){
           </div>
           <div style={{height:6,borderRadius:3,overflow:"hidden",display:"flex",marginTop:4}}>
             <div style={{width:`${ou.over}%`,background:C.bl}}/>
-            <div style={{width:`${ou.under}%`,background:"#ddd"}}/>
+            <div style={{width:`${ou.under}%`,background:C.bd}}/>
           </div>
         </div>
       </div>
@@ -213,6 +213,7 @@ function MatchCard({a,b,liveOdds}){
 }
 
 export default function Betting(){
+  const {C}=useTheme();
   const [selectedGroup,setSelectedGroup]=useState("ALL");
   const [liveOdds,setLiveOdds]=useState({});
   const [oddsStatus,setOddsStatus]=useState("loading"); // loading, live, fallback
@@ -305,7 +306,7 @@ export default function Betting(){
             <div style={{fontFamily:"'Oswald',sans-serif",fontSize:11,letterSpacing:2,color:C.a2,fontWeight:700,marginBottom:4,textAlign:"center"}}>
               GROUP {m.g}
             </div>
-            <MatchCard a={m.a} b={m.b} liveOdds={liveOdds[m.a.c+"_"+m.b.c]}/>
+            <MatchCard a={m.a} b={m.b} liveOdds={liveOdds[m.a.c+"_"+m.b.c]} C={C}/>
           </div>
         ))}
       </div>

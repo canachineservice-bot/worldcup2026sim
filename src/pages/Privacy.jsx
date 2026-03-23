@@ -1,12 +1,15 @@
 import Layout from './Layout'
+import { useTheme } from '../ThemeContext.jsx'
 
 export default function Privacy() {
-  const s = { marginBottom: 20, fontSize: 14, lineHeight: 1.8, color: '#555577' }
-  const h = { fontFamily: "'Oswald',sans-serif", fontSize: 18, fontWeight: 700, color: '#1a1a2e', marginBottom: 8, marginTop: 28 }
+  const { C } = useTheme();
+
+  const s = { marginBottom: 20, fontSize: 14, lineHeight: 1.8, color: C.t2 }
+  const h = { fontFamily: "'Oswald',sans-serif", fontSize: 18, fontWeight: 700, color: C.tx, marginBottom: 8, marginTop: 28 }
 
   return (
     <Layout title="Privacy Policy">
-      <div style={{ background: '#fff', borderRadius: 16, padding: '32px 28px', border: '1px solid #E2E5EB' }}>
+      <div style={{ background: C.cd, borderRadius: 16, padding: '32px 28px', border: `1px solid ${C.bd}` }}>
         <p style={s}>Last updated: March 2026</p>
 
         <h2 style={h}>1. Information We Collect</h2>

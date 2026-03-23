@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../ThemeContext.jsx";
 
 /* ═══════════════════════════════════════════════════════════
    FIFA WORLD CUP 2026 SIMULATOR — Production v7
@@ -205,8 +206,8 @@ function buildBracket(tb){
   };
 }
 
-// ── COLORS ──
-const C={bg:"#FAFBFD",b2:"#F0F2F6",cd:"#FFFFFF",tx:"#1a1a2e",t2:"#555577",t3:"#9999bb",
+// ── COLORS (fallback, overridden by theme context in App) ──
+const C_FALLBACK={bg:"#FAFBFD",b2:"#F0F2F6",cd:"#FFFFFF",tx:"#1a1a2e",t2:"#555577",t3:"#9999bb",
   ac:"#d4145a",a2:"#fbb03b",gn:"#00a854",bd:"#E2E5EB",bl:"#2563eb"};
 
 // ── REUSABLE BUTTON COMPONENTS (outside render) ──
@@ -224,6 +225,8 @@ const BigBtn=({onClick,children,color=C.gn})=>(
 // MAIN APP
 // ════════════════════════════════════════════
 export default function App(){
+  const{dark,toggle,C:themeC}=useTheme();
+  const C=themeC||C_FALLBACK;
   const[lang,setLang]=useState(null);
   const[mode,setMode]=useState(null);
   const[gm,setGm]=useState({});
@@ -456,6 +459,7 @@ export default function App(){
       ))}
     </div>
     <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:6,flexWrap:"wrap"}}>
+      <Btn onClick={toggle} color={C.a2}>{dark?"☀️":"🌙"}</Btn>
       <Btn onClick={()=>{setLang(null);fullReset()}} color={C.t3}>{L.chLang}</Btn>
       {mode&&<Btn onClick={fullReset} color={C.t2}>{L.chMode}</Btn>}
       {mode&&<Btn onClick={()=>{const m=mode;fullReset();setTimeout(()=>{if(m==="auto")doAuto();else setMode(m)},50)}} color={C.ac}>{L.resim}</Btn>}
