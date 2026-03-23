@@ -72,19 +72,21 @@ hi:{flag:"🇮🇳",label:"हिन्दी",title:"विश्व कप 202
 };
 
 // ── TEAMS ──
+// rt: composite rating (FIFA rank + ELO + form), rk: FIFA rank
+// wc: World Cup pedigree (titles + deep runs), fm: current form (0-10), df: defensive strength (0-10), ho: host bonus
 const TM={
-MEX:{c:"MEX",f:"🇲🇽",g:"A",rt:82,rk:15},KOR:{c:"KOR",f:"🇰🇷",g:"A",rt:76,rk:23},RSA:{c:"RSA",f:"🇿🇦",g:"A",rt:65,rk:59},DEN:{c:"DEN",f:"🇩🇰",g:"A",rt:78,rk:19},
-CAN:{c:"CAN",f:"🇨🇦",g:"B",rt:72,rk:40},SUI:{c:"SUI",f:"🇨🇭",g:"B",rt:80,rk:16},QAT:{c:"QAT",f:"🇶🇦",g:"B",rt:62,rk:45},ITA:{c:"ITA",f:"🇮🇹",g:"B",rt:83,rk:9},
-BRA:{c:"BRA",f:"🇧🇷",g:"C",rt:87,rk:5},MAR:{c:"MAR",f:"🇲🇦",g:"C",rt:79,rk:14},SCO:{c:"SCO",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",rt:70,rk:36},HAI:{c:"HAI",f:"🇭🇹",g:"C",rt:52,rk:88},
-USA:{c:"USA",f:"🇺🇸",g:"D",rt:81,rk:11},AUS:{c:"AUS",f:"🇦🇺",g:"D",rt:73,rk:25},PAR:{c:"PAR",f:"🇵🇾",g:"D",rt:70,rk:43},TUR:{c:"TUR",f:"🇹🇷",g:"D",rt:77,rk:26},
-GER:{c:"GER",f:"🇩🇪",g:"E",rt:84,rk:8},CIV:{c:"CIV",f:"🇨🇮",g:"E",rt:72,rk:38},ECU:{c:"ECU",f:"🇪🇨",g:"E",rt:71,rk:33},CUR:{c:"CUR",f:"🇨🇼",g:"E",rt:48,rk:83},
-NED:{c:"NED",f:"🇳🇱",g:"F",rt:83,rk:7},TUN:{c:"TUN",f:"🇹🇳",g:"F",rt:68,rk:39},JPN:{c:"JPN",f:"🇯🇵",g:"F",rt:80,rk:13},UKR:{c:"UKR",f:"🇺🇦",g:"F",rt:75,rk:22},
-BEL:{c:"BEL",f:"🇧🇪",g:"G",rt:80,rk:6},IRN:{c:"IRN",f:"🇮🇷",g:"G",rt:72,rk:21},EGY:{c:"EGY",f:"🇪🇬",g:"G",rt:70,rk:31},NZL:{c:"NZL",f:"🇳🇿",g:"G",rt:55,rk:95},
-ESP:{c:"ESP",f:"🇪🇸",g:"H",rt:90,rk:1},URU:{c:"URU",f:"🇺🇾",g:"H",rt:80,rk:10},KSA:{c:"KSA",f:"🇸🇦",g:"H",rt:67,rk:56},CPV:{c:"CPV",f:"🇨🇻",g:"H",rt:55,rk:62},
-FRA:{c:"FRA",f:"🇫🇷",g:"I",rt:88,rk:3},SEN:{c:"SEN",f:"🇸🇳",g:"I",rt:75,rk:20},NOR:{c:"NOR",f:"🇳🇴",g:"I",rt:74,rk:17},IRQ:{c:"IRQ",f:"🇮🇶",g:"I",rt:63,rk:55},
-ARG:{c:"ARG",f:"🇦🇷",g:"J",rt:89,rk:2},AUT:{c:"AUT",f:"🇦🇹",g:"J",rt:76,rk:24},JOR:{c:"JOR",f:"🇯🇴",g:"J",rt:64,rk:68},ALG:{c:"ALG",f:"🇩🇿",g:"J",rt:68,rk:37},
-POR:{c:"POR",f:"🇵🇹",g:"K",rt:86,rk:4},COL:{c:"COL",f:"🇨🇴",g:"K",rt:81,rk:12},UZB:{c:"UZB",f:"🇺🇿",g:"K",rt:66,rk:53},COD:{c:"COD",f:"🇨🇩",g:"K",rt:60,rk:49},
-ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:85,rk:4},CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:79,rk:18},GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:66,rk:44},PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:58,rk:72},
+MEX:{c:"MEX",f:"🇲🇽",g:"A",rt:82,rk:15,wc:3,fm:6,df:6,ho:1},KOR:{c:"KOR",f:"🇰🇷",g:"A",rt:76,rk:23,wc:2,fm:5,df:5,ho:0},RSA:{c:"RSA",f:"🇿🇦",g:"A",rt:65,rk:59,wc:1,fm:4,df:4,ho:0},DEN:{c:"DEN",f:"🇩🇰",g:"A",rt:78,rk:19,wc:2,fm:6,df:7,ho:0},
+CAN:{c:"CAN",f:"🇨🇦",g:"B",rt:72,rk:40,wc:0,fm:5,df:5,ho:1},SUI:{c:"SUI",f:"🇨🇭",g:"B",rt:80,rk:16,wc:2,fm:6,df:7,ho:0},QAT:{c:"QAT",f:"🇶🇦",g:"B",rt:62,rk:45,wc:0,fm:3,df:4,ho:0},ITA:{c:"ITA",f:"🇮🇹",g:"B",rt:83,rk:9,wc:8,fm:7,df:8,ho:0},
+BRA:{c:"BRA",f:"🇧🇷",g:"C",rt:87,rk:5,wc:10,fm:6,df:5,ho:0},MAR:{c:"MAR",f:"🇲🇦",g:"C",rt:79,rk:14,wc:4,fm:7,df:8,ho:0},SCO:{c:"SCO",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",rt:70,rk:36,wc:1,fm:5,df:5,ho:0},HAI:{c:"HAI",f:"🇭🇹",g:"C",rt:52,rk:88,wc:0,fm:3,df:3,ho:0},
+USA:{c:"USA",f:"🇺🇸",g:"D",rt:81,rk:11,wc:2,fm:7,df:6,ho:2},AUS:{c:"AUS",f:"🇦🇺",g:"D",rt:73,rk:25,wc:1,fm:5,df:5,ho:0},PAR:{c:"PAR",f:"🇵🇾",g:"D",rt:70,rk:43,wc:1,fm:4,df:5,ho:0},TUR:{c:"TUR",f:"🇹🇷",g:"D",rt:77,rk:26,wc:3,fm:6,df:5,ho:0},
+GER:{c:"GER",f:"🇩🇪",g:"E",rt:84,rk:8,wc:9,fm:7,df:6,ho:0},CIV:{c:"CIV",f:"🇨🇮",g:"E",rt:72,rk:38,wc:1,fm:6,df:4,ho:0},ECU:{c:"ECU",f:"🇪🇨",g:"E",rt:71,rk:33,wc:1,fm:5,df:5,ho:0},CUR:{c:"CUR",f:"🇨🇼",g:"E",rt:48,rk:83,wc:0,fm:3,df:3,ho:0},
+NED:{c:"NED",f:"🇳🇱",g:"F",rt:83,rk:7,wc:6,fm:7,df:7,ho:0},TUN:{c:"TUN",f:"🇹🇳",g:"F",rt:68,rk:39,wc:1,fm:5,df:6,ho:0},JPN:{c:"JPN",f:"🇯🇵",g:"F",rt:80,rk:13,wc:3,fm:8,df:6,ho:0},UKR:{c:"UKR",f:"🇺🇦",g:"F",rt:75,rk:22,wc:2,fm:5,df:5,ho:0},
+BEL:{c:"BEL",f:"🇧🇪",g:"G",rt:80,rk:6,wc:3,fm:5,df:6,ho:0},IRN:{c:"IRN",f:"🇮🇷",g:"G",rt:72,rk:21,wc:1,fm:5,df:6,ho:0},EGY:{c:"EGY",f:"🇪🇬",g:"G",rt:70,rk:31,wc:1,fm:5,df:5,ho:0},NZL:{c:"NZL",f:"🇳🇿",g:"G",rt:55,rk:95,wc:0,fm:4,df:4,ho:0},
+ESP:{c:"ESP",f:"🇪🇸",g:"H",rt:90,rk:1,wc:9,fm:9,df:8,ho:0},URU:{c:"URU",f:"🇺🇾",g:"H",rt:80,rk:10,wc:6,fm:6,df:7,ho:0},KSA:{c:"KSA",f:"🇸🇦",g:"H",rt:67,rk:56,wc:1,fm:4,df:4,ho:0},CPV:{c:"CPV",f:"🇨🇻",g:"H",rt:55,rk:62,wc:0,fm:4,df:4,ho:0},
+FRA:{c:"FRA",f:"🇫🇷",g:"I",rt:88,rk:3,wc:9,fm:7,df:7,ho:0},SEN:{c:"SEN",f:"🇸🇳",g:"I",rt:75,rk:20,wc:2,fm:6,df:5,ho:0},NOR:{c:"NOR",f:"🇳🇴",g:"I",rt:74,rk:17,wc:1,fm:7,df:5,ho:0},IRQ:{c:"IRQ",f:"🇮🇶",g:"I",rt:63,rk:55,wc:0,fm:4,df:4,ho:0},
+ARG:{c:"ARG",f:"🇦🇷",g:"J",rt:89,rk:2,wc:10,fm:8,df:7,ho:0},AUT:{c:"AUT",f:"🇦🇹",g:"J",rt:76,rk:24,wc:2,fm:6,df:6,ho:0},JOR:{c:"JOR",f:"🇯🇴",g:"J",rt:64,rk:68,wc:0,fm:5,df:5,ho:0},ALG:{c:"ALG",f:"🇩🇿",g:"J",rt:68,rk:37,wc:1,fm:5,df:5,ho:0},
+POR:{c:"POR",f:"🇵🇹",g:"K",rt:86,rk:4,wc:5,fm:7,df:7,ho:0},COL:{c:"COL",f:"🇨🇴",g:"K",rt:81,rk:12,wc:2,fm:7,df:6,ho:0},UZB:{c:"UZB",f:"🇺🇿",g:"K",rt:66,rk:53,wc:0,fm:5,df:5,ho:0},COD:{c:"COD",f:"🇨🇩",g:"K",rt:60,rk:49,wc:0,fm:4,df:4,ho:0},
+ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:85,rk:4,wc:6,fm:7,df:7,ho:0},CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:79,rk:18,wc:5,fm:6,df:7,ho:0},GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:66,rk:44,wc:2,fm:5,df:4,ho:0},PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:58,rk:72,wc:0,fm:4,df:4,ho:0},
 };
 const GS=["A","B","C","D","E","F","G","H","I","J","K","L"];
 const gT=g=>Object.values(TM).filter(t=>t.g===g);
@@ -94,26 +96,61 @@ const nm=(code,lg)=>TN[code]?.[lg]||code;
 // Poisson distribution for realistic goal generation
 const poi=lam=>{let L=Math.exp(-lam),k=0,p=1;do{k++;p*=Math.random()}while(p>L);return k-1};
 
-// Realistic mode: strongly favors higher-rated teams (FIFA ranking logic)
-// Rating diff of 10 = ~70% win chance, 20 = ~85%, 30+ = ~95%
+// Composite strength: FIFA rating (50%) + WC pedigree (15%) + form (20%) + defense (10%) + host bonus (5%)
+function getStrength(t){
+  return t.rt * 0.50
+    + (t.wc || 0) * 1.5   // WC pedigree: titles/deep runs boost (max ~15 pts)
+    + (t.fm || 5) * 2.0    // current form: 0-10 scaled to 0-20 (max ~20 pts)
+    + (t.df || 5) * 1.0    // defensive solidity: 0-10 (max ~10 pts)
+    + (t.ho || 0) * 3.0;   // host nation bonus (USA=2 → 6pts, MEX/CAN=1 → 3pts)
+}
+
+// Realistic match simulation using composite strength
+// Accounts for: team quality gap, defensive matchups, KO pressure, low-scoring tendencies
 function simM(a,b,ko=false){
-  const d=(a.rt-b.rt)/100;
-  // Higher multiplier (2.2) = stronger favorites advantage (FIFA-realistic)
-  let x=poi(Math.max(.3, 1.3+d*2.2)), y=poi(Math.max(.3, 1.3-d*2.2));
-  if(ko&&x===y){
-    // Extra time: favorite still has slight advantage
-    const fav=a.rt>=b.rt?0:1;
-    const e1=Math.random()<(fav===0?.28:.18)?1:0;
-    const e2=Math.random()<(fav===1?.28:.18)?1:0;
-    x+=e1; y+=e2;
-    if(x===y){
-      // Penalties: slight favorite advantage (55/45)
-      const favWins=Math.random()<(a.rt>=b.rt?.55:.45);
-      let p1=favWins?5:4, p2=favWins?4:5;
-      if(Math.random()<.3){p1=favWins?4:3;p2=favWins?3:4}
-      return{g1:x,g2:y,p1,p2,et:true}}
-    return{g1:x,g2:y,p1:null,p2:null,et:true}}
-  return{g1:x,g2:y,p1:null,p2:null,et:false}
+  const sA=getStrength(a), sB=getStrength(b);
+  const diff=(sA-sB)/100;
+
+  // Base expected goals: ~1.25 average, adjusted by strength diff
+  // Defensive teams concede less: opponent xG reduced by high df
+  const defFactorB = 1 - ((b.df||5) - 5) * 0.04; // good defense (df=8) reduces opponent xG by ~12%
+  const defFactorA = 1 - ((a.df||5) - 5) * 0.04;
+
+  // KO matches tend to be tighter / more cagey
+  const koFactor = ko ? 0.88 : 1.0;
+
+  const xgA = Math.max(0.25, (1.25 + diff * 2.0) * defFactorB * koFactor);
+  const xgB = Math.max(0.25, (1.25 - diff * 2.0) * defFactorA * koFactor);
+
+  let x = poi(xgA), y = poi(xgB);
+
+  // Cap unrealistic scorelines: max 6 goals per team (7-0 extremely rare in WC)
+  x = Math.min(x, 6); y = Math.min(y, 6);
+
+  if(ko && x === y){
+    // Extra time: tighter, fewer goals, slight favorite advantage
+    const favA = sA >= sB;
+    const etXgA = favA ? 0.35 : 0.25;
+    const etXgB = favA ? 0.25 : 0.35;
+    const e1 = poi(etXgA);
+    const e2 = poi(etXgB);
+    x += e1; y += e2;
+
+    if(x === y){
+      // Penalties: slight favorite edge (55/45) + experienced teams do better
+      const wcBonus = ((a.wc||0) - (b.wc||0)) * 0.02; // WC experience helps in pens
+      const penChance = Math.min(0.65, Math.max(0.35, (favA ? 0.55 : 0.45) + wcBonus));
+      const favWins = Math.random() < penChance;
+      // Realistic pen scores: 5-4, 4-3, 5-3, 6-5
+      const penScores = [[5,4],[4,3],[5,3],[6,5],[4,2],[3,2]];
+      const ps = penScores[Math.floor(Math.random() * penScores.length)];
+      const p1 = favWins ? ps[0] : ps[1];
+      const p2 = favWins ? ps[1] : ps[0];
+      return {g1:x, g2:y, p1, p2, et:true};
+    }
+    return {g1:x, g2:y, p1:null, p2:null, et:true};
+  }
+  return {g1:x, g2:y, p1:null, p2:null, et:false};
 }
 function winner(a,b,r){if(r.g1>r.g2)return a;if(r.g2>r.g1)return b;if(r.p1!=null)return r.p1>r.p2?a:b;return null}
 
