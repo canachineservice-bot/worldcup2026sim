@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 
 /* ═══════════════════════════════════════════════════════════
    FIFA WORLD CUP 2026 SIMULATOR — Production v7
@@ -393,6 +394,18 @@ export default function App(){
   <div style={{textAlign:"center",padding:"24px 16px 12px",background:C.cd,borderBottom:`1px solid ${C.bd}`}}>
     <h1 style={{fontFamily:"'Oswald',sans-serif",fontSize:"clamp(22px,5vw,38px)",fontWeight:800,letterSpacing:2,color:C.tx}}>{L.title}</h1>
     <div style={{fontSize:13,color:C.t2,marginTop:3}}>{L.sub} — 48 {L.teams}</div>
+    {/* Nav links */}
+    <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap"}}>
+      {[
+        ["/groups","Groups"],
+        ["/schedule","Schedule"],
+        ["/predictions","Predictions"],
+        ["/betting","📊 Betting"],
+        ["/morocco","Morocco"],
+      ].map(([to,label])=>(
+        <Link key={to} to={to} style={{fontSize:13,fontWeight:to==="/betting"?800:600,color:to==="/betting"?C.ac:C.bl,textDecoration:"none"}}>{label}</Link>
+      ))}
+    </div>
     <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:6,flexWrap:"wrap"}}>
       <Btn onClick={()=>{setLang(null);fullReset()}} color={C.t3}>{L.chLang}</Btn>
       {mode&&<Btn onClick={fullReset} color={C.t2}>{L.chMode}</Btn>}
@@ -622,8 +635,9 @@ export default function App(){
   </div>)}
 
   {/* ── FOOTER ── */}
-  <div style={{textAlign:"center",padding:"14px 12px 32px",color:C.t3,fontSize:10}}>
-    FIFA World Cup 2026 Simulator — Official Bracket M73→M104 — 48 {L.teams}
+  <div style={{textAlign:"center",padding:"14px 12px 32px",color:C.t3,fontSize:11}}>
+    FIFA World Cup 2026 Simulator — BY <span style={{fontWeight:700,color:C.tx}}>ZOUHAIRE EL MATAR</span>{" "}
+    <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:16,verticalAlign:"middle"}}>💬</a>
   </div>
   </div>);
 }
