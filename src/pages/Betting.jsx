@@ -1,7 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Layout from './Layout'
 
 const AFF_LINK="https://refpa7921972.top/L?tag=d_3955339m_97c_&site=3955339&ad=97";
+
+// The Odds API — free tier (500 requests/month)
+const ODDS_API_KEY="e1f5c898403867044fb688cb05e93aeb";
+const ODDS_API_URL="https://api.the-odds-api.com/v4/sports/soccer_fifa_world_cup/odds/?apiKey="+ODDS_API_KEY+"&regions=eu&markets=h2h&oddsFormat=decimal";
+
+// Team name mapping for API matching
+const TEAM_NAMES={
+  MEX:"Mexico",KOR:"South Korea",RSA:"South Africa",DEN:"Denmark",CAN:"Canada",SUI:"Switzerland",
+  QAT:"Qatar",ITA:"Italy",BRA:"Brazil",MAR:"Morocco",SCO:"Scotland",HAI:"Haiti",USA:"United States",
+  AUS:"Australia",PAR:"Paraguay",TUR:"Turkey",GER:"Germany",CIV:"Ivory Coast",ECU:"Ecuador",CUR:"Curacao",
+  NED:"Netherlands",TUN:"Tunisia",JPN:"Japan",UKR:"Ukraine",BEL:"Belgium",IRN:"Iran",EGY:"Egypt",
+  NZL:"New Zealand",ESP:"Spain",URU:"Uruguay",KSA:"Saudi Arabia",CPV:"Cape Verde",FRA:"France",
+  SEN:"Senegal",NOR:"Norway",IRQ:"Iraq",ARG:"Argentina",AUT:"Austria",JOR:"Jordan",ALG:"Algeria",
+  POR:"Portugal",COL:"Colombia",UZB:"Uzbekistan",COD:"DR Congo",ENG:"England",CRO:"Croatia",
+  GHA:"Ghana",PAN:"Panama"
+};
 
 // ── TEAM DATA (mirrored from Simulator) ──
 const TM={
@@ -61,8 +77,10 @@ const C={bg:"#FAFBFD",cd:"#FFFFFF",tx:"#1a1a2e",t2:"#555577",t3:"#9999bb",
   ac:"#d4145a",a2:"#fbb03b",gn:"#00a854",bd:"#E2E5EB",bl:"#2563eb"};
 
 // ── MATCH CARD ──
-function MatchCard({a,b}){
-  const odds=calcOdds(a,b);
+function MatchCard({a,b,liveOdds}){
+  const fallback=calcOdds(a,b);
+  const odds=liveOdds||fallback;
+  const isLive=!!liveOdds;
   const h2h=getH2H(a,b);
   const btts=calcBTTS(a,b);
   const ou=calcOU(a,b);
@@ -89,9 +107,13 @@ function MatchCard({a,b}){
       </div>
 
       {/* Odds */}
+      <div style={{marginBottom:4,textAlign:"center"}}>
+        {isLive?<span style={{fontSize:9,fontWeight:800,color:"#fff",background:C.gn,padding:"2px 8px",borderRadius:4,letterSpacing:1}}>LIVE ODDS</span>
+        :<span style={{fontSize:9,fontWeight:600,color:C.t3,letterSpacing:1}}>ESTIMATED ODDS</span>}
+      </div>
       <div style={{display:"flex",gap:6,marginBottom:12}}>
-        {[["1",odds.o1,C.bl],["X",odds.oX,"#555"],[" 2",odds.o2,C.ac]].map(([label,val,col])=>(
-          <div key={label} style={{flex:1,textAlign:"center",padding:"10px 4px",borderRadius:10,border:`1px solid ${C.bd}`,background:"#f8f9fc"}}>
+        {[["1",odds.o1,C.bl],["X",odds.oX,"#555"],["2",odds.o2,C.ac]].map(([label,val,col])=>(
+          <div key={label} style={{flex:1,textAlign:"center",padding:"10px 4px",borderRadius:10,border:`1px solid ${isLive?C.gn:C.bd}`,background:isLive?"#f0fdf4":"#f8f9fc"}}>
             <div style={{fontSize:10,color:C.t3,fontWeight:600}}>{label}</div>
             <div style={{fontFamily:"'Oswald',sans-serif",fontSize:20,fontWeight:800,color:col}}>{val}</div>
           </div>
@@ -192,6 +214,46 @@ function MatchCard({a,b}){
 
 export default function Betting(){
   const [selectedGroup,setSelectedGroup]=useState("ALL");
+  const [liveOdds,setLiveOdds]=useState({});
+  const [oddsStatus,setOddsStatus]=useState("loading"); // loading, live, fallback
+
+  // Fetch live odds from The Odds API
+  useEffect(()=>{
+    fetch(ODDS_API_URL)
+      .then(r=>{if(!r.ok)throw new Error("API error");return r.json()})
+      .then(data=>{
+        const oddsMap={};
+        data.forEach(event=>{
+          const home=event.home_team;
+          const away=event.away_team;
+          // Find matching team codes
+          const homeCode=Object.entries(TEAM_NAMES).find(([,name])=>
+            home.toLowerCase().includes(name.toLowerCase())||name.toLowerCase().includes(home.toLowerCase())
+          )?.[0];
+          const awayCode=Object.entries(TEAM_NAMES).find(([,name])=>
+            away.toLowerCase().includes(name.toLowerCase())||name.toLowerCase().includes(away.toLowerCase())
+          )?.[0];
+          if(homeCode&&awayCode&&event.bookmakers?.length){
+            const bm=event.bookmakers[0];
+            const market=bm.markets?.find(m=>m.key==="h2h");
+            if(market?.outcomes){
+              const o1=market.outcomes.find(o=>o.name===home)?.price;
+              const oX=market.outcomes.find(o=>o.name==="Draw")?.price;
+              const o2=market.outcomes.find(o=>o.name===away)?.price;
+              if(o1&&o2){
+                const key=homeCode+"_"+awayCode;
+                const key2=awayCode+"_"+homeCode;
+                oddsMap[key]={o1:o1.toFixed(2),oX:oX?oX.toFixed(2):"4.00",o2:o2.toFixed(2)};
+                oddsMap[key2]={o1:o2.toFixed(2),oX:oX?oX.toFixed(2):"4.00",o2:o1.toFixed(2)};
+              }
+            }
+          }
+        });
+        setLiveOdds(oddsMap);
+        setOddsStatus(Object.keys(oddsMap).length>0?"live":"fallback");
+      })
+      .catch(()=>setOddsStatus("fallback"));
+  },[]);
 
   const groups=selectedGroup==="ALL"?GS:[selectedGroup];
   const matches=[];
@@ -205,9 +267,12 @@ export default function Betting(){
   return(
     <Layout title="📊 BETTING STATS & ODDS">
       <div style={{textAlign:"center",marginBottom:24}}>
-        <p style={{color:"#555577",fontSize:15,maxWidth:600,margin:"8px auto 16px"}}>
+        <p style={{color:"#555577",fontSize:15,maxWidth:600,margin:"8px auto 12px"}}>
           Advanced statistics, odds, head-to-head records, and betting insights for every World Cup 2026 match.
         </p>
+        {oddsStatus==="live"&&<div style={{fontSize:11,fontWeight:700,color:C.gn,marginBottom:8}}>🟢 LIVE ODDS FROM BOOKMAKERS</div>}
+        {oddsStatus==="fallback"&&<div style={{fontSize:11,color:C.t3,marginBottom:8}}>Estimated odds (live odds available closer to tournament)</div>}
+        {oddsStatus==="loading"&&<div style={{fontSize:11,color:C.t3,marginBottom:8}}>Loading odds...</div>}
 
         {/* Group filter */}
         <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:6}}>
@@ -240,7 +305,7 @@ export default function Betting(){
             <div style={{fontFamily:"'Oswald',sans-serif",fontSize:11,letterSpacing:2,color:C.a2,fontWeight:700,marginBottom:4,textAlign:"center"}}>
               GROUP {m.g}
             </div>
-            <MatchCard a={m.a} b={m.b}/>
+            <MatchCard a={m.a} b={m.b} liveOdds={liveOdds[m.a.c+"_"+m.b.c]}/>
           </div>
         ))}
       </div>

@@ -635,10 +635,9 @@ export default function App(){
 
   {/* ── FOOTER ── */}
   <div style={{textAlign:"center",padding:"14px 12px 32px"}}>
-    <div style={{fontSize:9,color:C.t3,marginBottom:2}}>by</div>
-    <div style={{fontFamily:"'Oswald',sans-serif",fontSize:13,fontWeight:700,letterSpacing:2,color:C.t3}}>
-      ZOUHAIRE EL MATAR{" "}
-      <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:14,verticalAlign:"middle"}}>💬</a>
+    <div style={{fontFamily:"'Oswald',sans-serif",fontSize:10,fontWeight:600,letterSpacing:1,color:C.t3}}>
+      WORLD CUP 2026 SIMULATOR — ZOUHAIRE EL MATAR{" "}
+      <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:12,verticalAlign:"middle"}}>💬</a>
     </div>
   </div>
   </div>);
