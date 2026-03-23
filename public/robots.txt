@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://worldcup2026sim.com/sitemap.xml
+Sitemap: https://wcupsim.com/sitemap.xml
