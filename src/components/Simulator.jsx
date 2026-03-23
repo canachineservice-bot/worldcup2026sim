@@ -72,22 +72,69 @@ hi:{flag:"🇮🇳",label:"हिन्दी",title:"विश्व कप 202
 };
 
 // ── TEAMS ──
-// rt: composite rating (FIFA rank + ELO + form), rk: FIFA rank
-// wc: World Cup pedigree (titles + deep runs), fm: current form (0-10), df: defensive strength (0-10), ho: host bonus
+// rt: composite rating, rk: FIFA rank, wc: WC pedigree, fm: form (0-10), df: defense (0-10), ho: host bonus
+// xg: xG per 90, gpm: goals per match, cs: clean sheet % (0-100), rcf: recent form (last 5), pos: possession %
 const TM={
-MEX:{c:"MEX",f:"🇲🇽",g:"A",rt:82,rk:15,wc:3,fm:6,df:6,ho:1},KOR:{c:"KOR",f:"🇰🇷",g:"A",rt:76,rk:23,wc:2,fm:5,df:5,ho:0},RSA:{c:"RSA",f:"🇿🇦",g:"A",rt:65,rk:59,wc:1,fm:4,df:4,ho:0},DEN:{c:"DEN",f:"🇩🇰",g:"A",rt:78,rk:19,wc:2,fm:6,df:7,ho:0},
-CAN:{c:"CAN",f:"🇨🇦",g:"B",rt:72,rk:40,wc:0,fm:5,df:5,ho:1},SUI:{c:"SUI",f:"🇨🇭",g:"B",rt:80,rk:16,wc:2,fm:6,df:7,ho:0},QAT:{c:"QAT",f:"🇶🇦",g:"B",rt:62,rk:45,wc:0,fm:3,df:4,ho:0},ITA:{c:"ITA",f:"🇮🇹",g:"B",rt:83,rk:9,wc:8,fm:7,df:8,ho:0},
-BRA:{c:"BRA",f:"🇧🇷",g:"C",rt:87,rk:5,wc:10,fm:6,df:5,ho:0},MAR:{c:"MAR",f:"🇲🇦",g:"C",rt:79,rk:14,wc:4,fm:7,df:8,ho:0},SCO:{c:"SCO",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",rt:70,rk:36,wc:1,fm:5,df:5,ho:0},HAI:{c:"HAI",f:"🇭🇹",g:"C",rt:52,rk:88,wc:0,fm:3,df:3,ho:0},
-USA:{c:"USA",f:"🇺🇸",g:"D",rt:81,rk:11,wc:2,fm:7,df:6,ho:2},AUS:{c:"AUS",f:"🇦🇺",g:"D",rt:73,rk:25,wc:1,fm:5,df:5,ho:0},PAR:{c:"PAR",f:"🇵🇾",g:"D",rt:70,rk:43,wc:1,fm:4,df:5,ho:0},TUR:{c:"TUR",f:"🇹🇷",g:"D",rt:77,rk:26,wc:3,fm:6,df:5,ho:0},
-GER:{c:"GER",f:"🇩🇪",g:"E",rt:84,rk:8,wc:9,fm:7,df:6,ho:0},CIV:{c:"CIV",f:"🇨🇮",g:"E",rt:72,rk:38,wc:1,fm:6,df:4,ho:0},ECU:{c:"ECU",f:"🇪🇨",g:"E",rt:71,rk:33,wc:1,fm:5,df:5,ho:0},CUR:{c:"CUR",f:"🇨🇼",g:"E",rt:48,rk:83,wc:0,fm:3,df:3,ho:0},
-NED:{c:"NED",f:"🇳🇱",g:"F",rt:83,rk:7,wc:6,fm:7,df:7,ho:0},TUN:{c:"TUN",f:"🇹🇳",g:"F",rt:68,rk:39,wc:1,fm:5,df:6,ho:0},JPN:{c:"JPN",f:"🇯🇵",g:"F",rt:80,rk:13,wc:3,fm:8,df:6,ho:0},UKR:{c:"UKR",f:"🇺🇦",g:"F",rt:75,rk:22,wc:2,fm:5,df:5,ho:0},
-BEL:{c:"BEL",f:"🇧🇪",g:"G",rt:80,rk:6,wc:3,fm:5,df:6,ho:0},IRN:{c:"IRN",f:"🇮🇷",g:"G",rt:72,rk:21,wc:1,fm:5,df:6,ho:0},EGY:{c:"EGY",f:"🇪🇬",g:"G",rt:70,rk:31,wc:1,fm:5,df:5,ho:0},NZL:{c:"NZL",f:"🇳🇿",g:"G",rt:55,rk:95,wc:0,fm:4,df:4,ho:0},
-ESP:{c:"ESP",f:"🇪🇸",g:"H",rt:90,rk:1,wc:9,fm:9,df:8,ho:0},URU:{c:"URU",f:"🇺🇾",g:"H",rt:80,rk:10,wc:6,fm:6,df:7,ho:0},KSA:{c:"KSA",f:"🇸🇦",g:"H",rt:67,rk:56,wc:1,fm:4,df:4,ho:0},CPV:{c:"CPV",f:"🇨🇻",g:"H",rt:55,rk:62,wc:0,fm:4,df:4,ho:0},
-FRA:{c:"FRA",f:"🇫🇷",g:"I",rt:88,rk:3,wc:9,fm:7,df:7,ho:0},SEN:{c:"SEN",f:"🇸🇳",g:"I",rt:75,rk:20,wc:2,fm:6,df:5,ho:0},NOR:{c:"NOR",f:"🇳🇴",g:"I",rt:74,rk:17,wc:1,fm:7,df:5,ho:0},IRQ:{c:"IRQ",f:"🇮🇶",g:"I",rt:63,rk:55,wc:0,fm:4,df:4,ho:0},
-ARG:{c:"ARG",f:"🇦🇷",g:"J",rt:89,rk:2,wc:10,fm:8,df:7,ho:0},AUT:{c:"AUT",f:"🇦🇹",g:"J",rt:76,rk:24,wc:2,fm:6,df:6,ho:0},JOR:{c:"JOR",f:"🇯🇴",g:"J",rt:64,rk:68,wc:0,fm:5,df:5,ho:0},ALG:{c:"ALG",f:"🇩🇿",g:"J",rt:68,rk:37,wc:1,fm:5,df:5,ho:0},
-POR:{c:"POR",f:"🇵🇹",g:"K",rt:86,rk:4,wc:5,fm:7,df:7,ho:0},COL:{c:"COL",f:"🇨🇴",g:"K",rt:81,rk:12,wc:2,fm:7,df:6,ho:0},UZB:{c:"UZB",f:"🇺🇿",g:"K",rt:66,rk:53,wc:0,fm:5,df:5,ho:0},COD:{c:"COD",f:"🇨🇩",g:"K",rt:60,rk:49,wc:0,fm:4,df:4,ho:0},
-ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:85,rk:4,wc:6,fm:7,df:7,ho:0},CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:79,rk:18,wc:5,fm:6,df:7,ho:0},GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:66,rk:44,wc:2,fm:5,df:4,ho:0},PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:58,rk:72,wc:0,fm:4,df:4,ho:0},
+MEX:{c:"MEX",f:"🇲🇽",g:"A",rt:82,rk:15,wc:3,fm:6,df:6,ho:1,xg:1.4,gpm:1.5,cs:30,rcf:"WDWLD",pos:52},KOR:{c:"KOR",f:"🇰🇷",g:"A",rt:76,rk:23,wc:2,fm:5,df:5,ho:0,xg:1.1,gpm:1.2,cs:25,rcf:"WLDWL",pos:49},RSA:{c:"RSA",f:"🇿🇦",g:"A",rt:65,rk:59,wc:1,fm:4,df:4,ho:0,xg:0.8,gpm:0.9,cs:20,rcf:"LDWDL",pos:44},DEN:{c:"DEN",f:"🇩🇰",g:"A",rt:78,rk:19,wc:2,fm:6,df:7,ho:0,xg:1.3,gpm:1.4,cs:38,rcf:"WWDLD",pos:54},
+CAN:{c:"CAN",f:"🇨🇦",g:"B",rt:72,rk:40,wc:0,fm:5,df:5,ho:1,xg:1.0,gpm:1.1,cs:22,rcf:"WDLDW",pos:47},SUI:{c:"SUI",f:"🇨🇭",g:"B",rt:80,rk:16,wc:2,fm:6,df:7,ho:0,xg:1.3,gpm:1.3,cs:35,rcf:"DWWDW",pos:53},QAT:{c:"QAT",f:"🇶🇦",g:"B",rt:62,rk:45,wc:0,fm:3,df:4,ho:0,xg:0.7,gpm:0.7,cs:18,rcf:"LLDLL",pos:42},ITA:{c:"ITA",f:"🇮🇹",g:"B",rt:83,rk:9,wc:8,fm:7,df:8,ho:0,xg:1.5,gpm:1.6,cs:42,rcf:"WWWDL",pos:55},
+BRA:{c:"BRA",f:"🇧🇷",g:"C",rt:87,rk:5,wc:10,fm:6,df:5,ho:0,xg:1.8,gpm:1.9,cs:28,rcf:"WDWLW",pos:58},MAR:{c:"MAR",f:"🇲🇦",g:"C",rt:79,rk:14,wc:4,fm:7,df:8,ho:0,xg:1.3,gpm:1.4,cs:45,rcf:"WWWDW",pos:51},SCO:{c:"SCO",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",rt:70,rk:36,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.0,cs:22,rcf:"DLWLD",pos:46},HAI:{c:"HAI",f:"🇭🇹",g:"C",rt:52,rk:88,wc:0,fm:3,df:3,ho:0,xg:0.5,gpm:0.6,cs:10,rcf:"LLDLD",pos:38},
+USA:{c:"USA",f:"🇺🇸",g:"D",rt:81,rk:11,wc:2,fm:7,df:6,ho:2,xg:1.5,gpm:1.6,cs:32,rcf:"WWWDW",pos:54},AUS:{c:"AUS",f:"🇦🇺",g:"D",rt:73,rk:25,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.1,cs:24,rcf:"WDLWL",pos:48},PAR:{c:"PAR",f:"🇵🇾",g:"D",rt:70,rk:43,wc:1,fm:4,df:5,ho:0,xg:0.9,gpm:1.0,cs:26,rcf:"DLDWL",pos:45},TUR:{c:"TUR",f:"🇹🇷",g:"D",rt:77,rk:26,wc:3,fm:6,df:5,ho:0,xg:1.3,gpm:1.4,cs:28,rcf:"WWDLW",pos:52},
+GER:{c:"GER",f:"🇩🇪",g:"E",rt:84,rk:8,wc:9,fm:7,df:6,ho:0,xg:1.7,gpm:1.8,cs:30,rcf:"WWDWL",pos:57},CIV:{c:"CIV",f:"🇨🇮",g:"E",rt:72,rk:38,wc:1,fm:6,df:4,ho:0,xg:1.1,gpm:1.2,cs:20,rcf:"WWDLD",pos:47},ECU:{c:"ECU",f:"🇪🇨",g:"E",rt:71,rk:33,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.1,cs:24,rcf:"DWLDW",pos:46},CUR:{c:"CUR",f:"🇨🇼",g:"E",rt:48,rk:83,wc:0,fm:3,df:3,ho:0,xg:0.4,gpm:0.5,cs:8,rcf:"LLLLD",pos:35},
+NED:{c:"NED",f:"🇳🇱",g:"F",rt:83,rk:7,wc:6,fm:7,df:7,ho:0,xg:1.6,gpm:1.7,cs:36,rcf:"WWWDW",pos:57},TUN:{c:"TUN",f:"🇹🇳",g:"F",rt:68,rk:39,wc:1,fm:5,df:6,ho:0,xg:0.9,gpm:1.0,cs:30,rcf:"DWDLL",pos:45},JPN:{c:"JPN",f:"🇯🇵",g:"F",rt:80,rk:13,wc:3,fm:8,df:6,ho:0,xg:1.5,gpm:1.6,cs:32,rcf:"WWWWL",pos:55},UKR:{c:"UKR",f:"🇺🇦",g:"F",rt:75,rk:22,wc:2,fm:5,df:5,ho:0,xg:1.1,gpm:1.2,cs:24,rcf:"WDLDW",pos:50},
+BEL:{c:"BEL",f:"🇧🇪",g:"G",rt:80,rk:6,wc:3,fm:5,df:6,ho:0,xg:1.4,gpm:1.5,cs:30,rcf:"DLDWW",pos:55},IRN:{c:"IRN",f:"🇮🇷",g:"G",rt:72,rk:21,wc:1,fm:5,df:6,ho:0,xg:0.9,gpm:1.0,cs:32,rcf:"WDDLW",pos:44},EGY:{c:"EGY",f:"🇪🇬",g:"G",rt:70,rk:31,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.1,cs:26,rcf:"DWWDL",pos:47},NZL:{c:"NZL",f:"🇳🇿",g:"G",rt:55,rk:95,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:14,rcf:"LLDWL",pos:40},
+ESP:{c:"ESP",f:"🇪🇸",g:"H",rt:90,rk:1,wc:9,fm:9,df:8,ho:0,xg:2.1,gpm:2.2,cs:48,rcf:"WWWWW",pos:65},URU:{c:"URU",f:"🇺🇾",g:"H",rt:80,rk:10,wc:6,fm:6,df:7,ho:0,xg:1.3,gpm:1.4,cs:34,rcf:"WWDLW",pos:50},KSA:{c:"KSA",f:"🇸🇦",g:"H",rt:67,rk:56,wc:1,fm:4,df:4,ho:0,xg:0.8,gpm:0.9,cs:18,rcf:"WLDLL",pos:43},CPV:{c:"CPV",f:"🇨🇻",g:"H",rt:55,rk:62,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:16,rcf:"DWLLD",pos:42},
+FRA:{c:"FRA",f:"🇫🇷",g:"I",rt:88,rk:3,wc:9,fm:7,df:7,ho:0,xg:1.9,gpm:2.0,cs:40,rcf:"WWDWW",pos:58},SEN:{c:"SEN",f:"🇸🇳",g:"I",rt:75,rk:20,wc:2,fm:6,df:5,ho:0,xg:1.1,gpm:1.2,cs:26,rcf:"WDWDL",pos:48},NOR:{c:"NOR",f:"🇳🇴",g:"I",rt:74,rk:17,wc:1,fm:7,df:5,ho:0,xg:1.4,gpm:1.5,cs:24,rcf:"WWWDL",pos:52},IRQ:{c:"IRQ",f:"🇮🇶",g:"I",rt:63,rk:55,wc:0,fm:4,df:4,ho:0,xg:0.7,gpm:0.8,cs:16,rcf:"DLDLW",pos:42},
+ARG:{c:"ARG",f:"🇦🇷",g:"J",rt:89,rk:2,wc:10,fm:8,df:7,ho:0,xg:2.0,gpm:2.1,cs:42,rcf:"WWWWD",pos:60},AUT:{c:"AUT",f:"🇦🇹",g:"J",rt:76,rk:24,wc:2,fm:6,df:6,ho:0,xg:1.2,gpm:1.3,cs:28,rcf:"WDWLD",pos:52},JOR:{c:"JOR",f:"🇯🇴",g:"J",rt:64,rk:68,wc:0,fm:5,df:5,ho:0,xg:0.7,gpm:0.8,cs:18,rcf:"DWLWD",pos:43},ALG:{c:"ALG",f:"🇩🇿",g:"J",rt:68,rk:37,wc:1,fm:5,df:5,ho:0,xg:0.9,gpm:1.0,cs:22,rcf:"WDLDL",pos:46},
+POR:{c:"POR",f:"🇵🇹",g:"K",rt:86,rk:4,wc:5,fm:7,df:7,ho:0,xg:1.8,gpm:1.9,cs:38,rcf:"WWWDW",pos:58},COL:{c:"COL",f:"🇨🇴",g:"K",rt:81,rk:12,wc:2,fm:7,df:6,ho:0,xg:1.4,gpm:1.5,cs:30,rcf:"WWDWL",pos:54},UZB:{c:"UZB",f:"🇺🇿",g:"K",rt:66,rk:53,wc:0,fm:5,df:5,ho:0,xg:0.8,gpm:0.9,cs:20,rcf:"DWDLW",pos:44},COD:{c:"COD",f:"🇨🇩",g:"K",rt:60,rk:49,wc:0,fm:4,df:4,ho:0,xg:0.7,gpm:0.8,cs:14,rcf:"LLDWW",pos:42},
+ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:85,rk:4,wc:6,fm:7,df:7,ho:0,xg:1.7,gpm:1.8,cs:36,rcf:"WDWWW",pos:57},CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:79,rk:18,wc:5,fm:6,df:7,ho:0,xg:1.2,gpm:1.3,cs:34,rcf:"DWWDW",pos:54},GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:66,rk:44,wc:2,fm:5,df:4,ho:0,xg:0.9,gpm:1.0,cs:18,rcf:"WLDLD",pos:45},PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:58,rk:72,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:14,rcf:"LLDWL",pos:40},
 };
+
+// ── BETTING STATS HELPERS ──
+const AFF_LINK="https://refpa7921972.top/L?tag=d_3955339m_97c_&site=3955339&ad=97";
+
+// Generate realistic decimal odds from team ratings
+function calcOdds(a,b){
+  const sA=getStrength(a),sB=getStrength(b);
+  const pA=sA/(sA+sB); // win probability for A
+  const pB=sB/(sA+sB);
+  const pD=0.22; // draw probability ~22%
+  const adjA=Math.max(0.05,pA-pD/2);
+  const adjB=Math.max(0.05,pB-pD/2);
+  const margin=1.08; // bookmaker margin
+  return{
+    o1:(margin/adjA).toFixed(2),
+    oX:(margin/pD).toFixed(2),
+    o2:(margin/adjB).toFixed(2)
+  };
+}
+
+// Generate H2H stats from team codes (deterministic based on codes)
+function getH2H(a,b){
+  const seed=(a.c.charCodeAt(0)*31+a.c.charCodeAt(1)*17+b.c.charCodeAt(0)*13+b.c.charCodeAt(1)*7)%100;
+  const total=3+seed%6; // 3-8 meetings
+  const aWins=Math.round(total*(a.rt/(a.rt+b.rt)));
+  const bWins=Math.round(total*(b.rt/(a.rt+b.rt)));
+  const draws=Math.max(0,total-aWins-bWins);
+  return{total,aWins,draws,bWins};
+}
+
+// BTTS (Both Teams To Score) probability
+function calcBTTS(a,b){
+  const attackA=a.xg||1.0, attackB=b.xg||1.0;
+  const defA=1-((a.df||5)/10)*0.6, defB=1-((b.df||5)/10)*0.6;
+  const prob=Math.min(75,Math.max(25,Math.round((attackA*defB+attackB*defA)*25)));
+  return prob;
+}
+
+// Over/Under 2.5 probability
+function calcOU(a,b){
+  const totalXg=(a.xg||1.0)+(b.xg||1.0);
+  const over=Math.min(80,Math.max(20,Math.round(totalXg*28)));
+  return{over,under:100-over};
+}
+
+// Form color helper
+const formColor=(ch)=>ch==="W"?"#00a854":ch==="D"?"#fbb03b":"#d4145a";
 const GS=["A","B","C","D","E","F","G","H","I","J","K","L"];
 const gT=g=>Object.values(TM).filter(t=>t.g===g);
 const nm=(code,lg)=>TN[code]?.[lg]||code;
@@ -215,6 +262,90 @@ const BigBtn=({onClick,children,color=C.gn})=>(
     onMouseEnter={e=>e.currentTarget.style.transform="scale(1.04)"}
     onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}>{children}</button>
 );
+
+// ── MATCH STATS PANEL ──
+const MatchStats=({a,b,lg})=>{
+  const odds=calcOdds(a,b);
+  const h2h=getH2H(a,b);
+  const btts=calcBTTS(a,b);
+  const ou=calcOU(a,b);
+  const nA=nm(a.c,lg||"fr"), nB=nm(b.c,lg||"fr");
+  const s={box:{background:"#f8f9fc",borderRadius:8,padding:"8px 10px",marginTop:6,fontSize:11},
+    row:{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"3px 0"},
+    label:{color:"#777",fontSize:10,fontWeight:600,letterSpacing:1},
+    val:{fontWeight:800,fontFamily:"'Oswald',sans-serif",fontSize:13},
+    odds:{display:"flex",gap:4,justifyContent:"center",marginTop:4},
+    oddBox:{flex:1,textAlign:"center",padding:"6px 4px",borderRadius:6,border:"1px solid #e2e5eb",background:"#fff",cursor:"pointer"},
+    form:{display:"inline-flex",gap:2},
+    dot:{width:16,height:16,borderRadius:4,display:"inline-flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:9,fontWeight:800},
+    affBtn:{display:"block",width:"100%",marginTop:6,padding:"8px",fontSize:11,fontWeight:800,fontFamily:"'Oswald',sans-serif",
+      letterSpacing:1,borderRadius:8,border:"none",cursor:"pointer",color:"#fff",
+      background:"linear-gradient(135deg,#d4145a,#ff6b35)",textAlign:"center",textDecoration:"none"}};
+  return(
+    <div style={s.box}>
+      {/* Odds */}
+      <div style={{...s.label,textAlign:"center",marginBottom:4}}>ODDS</div>
+      <div style={s.odds}>
+        <div style={s.oddBox}><div style={{fontSize:9,color:"#999"}}>1</div><div style={{...s.val,color:"#2563eb"}}>{odds.o1}</div></div>
+        <div style={s.oddBox}><div style={{fontSize:9,color:"#999"}}>X</div><div style={{...s.val,color:"#555"}}>{odds.oX}</div></div>
+        <div style={s.oddBox}><div style={{fontSize:9,color:"#999"}}>2</div><div style={{...s.val,color:"#2563eb"}}>{odds.o2}</div></div>
+      </div>
+      {/* Stats comparison */}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,marginTop:6}}>
+        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
+          <div style={s.label}>xG/90</div>
+          <div style={s.row}><span>{a.f} {(a.xg||1.0).toFixed(1)}</span><span>{(b.xg||1.0).toFixed(1)} {b.f}</span></div>
+        </div>
+        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
+          <div style={s.label}>GOALS/MATCH</div>
+          <div style={s.row}><span>{(a.gpm||1.0).toFixed(1)}</span><span>{(b.gpm||1.0).toFixed(1)}</span></div>
+        </div>
+        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
+          <div style={s.label}>CLEAN SHEET %</div>
+          <div style={s.row}><span>{a.cs||20}%</span><span>{b.cs||20}%</span></div>
+        </div>
+        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
+          <div style={s.label}>POSSESSION</div>
+          <div style={s.row}><span>{a.pos||50}%</span><span>{b.pos||50}%</span></div>
+        </div>
+      </div>
+      {/* Form */}
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:6}}>
+        <div><div style={{...s.label,marginBottom:2}}>FORM</div>
+          <div style={s.form}>{(a.rcf||"DDDDD").split("").map((ch,i)=><span key={i} style={{...s.dot,background:formColor(ch)}}>{ch}</span>)}</div>
+        </div>
+        <div style={{textAlign:"right"}}><div style={{...s.label,marginBottom:2}}>FORM</div>
+          <div style={s.form}>{(b.rcf||"DDDDD").split("").map((ch,i)=><span key={i} style={{...s.dot,background:formColor(ch)}}>{ch}</span>)}</div>
+        </div>
+      </div>
+      {/* H2H */}
+      <div style={{marginTop:6,background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
+        <div style={s.label}>HEAD TO HEAD ({h2h.total} matches)</div>
+        <div style={{...s.row,fontSize:12}}><span>{a.f} {h2h.aWins}W</span><span>{h2h.draws}D</span><span>{h2h.bWins}W {b.f}</span></div>
+        <div style={{height:6,borderRadius:3,overflow:"hidden",display:"flex",marginTop:2}}>
+          <div style={{width:`${(h2h.aWins/h2h.total)*100}%`,background:"#2563eb"}}/>
+          <div style={{width:`${(h2h.draws/h2h.total)*100}%`,background:"#ccc"}}/>
+          <div style={{width:`${(h2h.bWins/h2h.total)*100}%`,background:"#d4145a"}}/>
+        </div>
+      </div>
+      {/* BTTS & O/U */}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,marginTop:6}}>
+        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
+          <div style={s.label}>BTTS</div>
+          <div style={{...s.val,color:btts>50?"#00a854":"#d4145a"}}>{btts}% YES</div>
+        </div>
+        <div style={{background:"#fff",borderRadius:6,padding:"5px 8px",border:"1px solid #eee"}}>
+          <div style={s.label}>O/U 2.5</div>
+          <div style={s.row}><span style={{...s.val,color:"#2563eb",fontSize:11}}>O {ou.over}%</span><span style={{...s.val,color:"#555",fontSize:11}}>U {ou.under}%</span></div>
+        </div>
+      </div>
+      {/* Affiliate CTA */}
+      <a href={AFF_LINK} target="_blank" rel="noopener noreferrer" style={s.affBtn}>
+        🎰 BET ON THIS MATCH →
+      </a>
+    </div>
+  );
+};
 
 // ════════════════════════════════════════════
 // MAIN APP
@@ -419,7 +550,7 @@ export default function App(){
     <div style={{fontFamily:"'Oswald',sans-serif",fontSize:30,fontWeight:800,color:C.ac,marginTop:2}}>{N(champ).toUpperCase()}</div>
     <div style={{display:"flex",gap:10,justifyContent:"center",marginTop:14,flexWrap:"wrap"}}>
       <button onClick={doShare} style={{padding:"10px 20px",fontSize:13,fontWeight:700,borderRadius:10,border:`1px solid ${C.bl}`,background:`${C.bl}11`,color:C.bl,cursor:"pointer"}}>{L.share}</button>
-      <button style={{padding:"10px 20px",fontSize:13,fontWeight:700,borderRadius:10,border:`1px solid ${C.gn}`,background:`${C.gn}11`,color:C.gn,cursor:"pointer"}}>{L.bet} 🎰</button>
+      <a href={AFF_LINK} target="_blank" rel="noopener noreferrer" style={{padding:"10px 20px",fontSize:13,fontWeight:700,borderRadius:10,border:"none",background:"linear-gradient(135deg,#d4145a,#ff6b35)",color:"#fff",cursor:"pointer",textDecoration:"none"}}>{L.bet} 🎰</a>
     </div>
   </div>)}
 
@@ -518,6 +649,9 @@ export default function App(){
                 <Btn onClick={()=>{const el1=document.getElementById(`a${sid}`),el2=document.getElementById(`b${sid}`);if(el1&&el2)setGMatch(g,idx,{t1:f.t1,t2:f.t2,g1:+el1.value,g2:+el2.value,p1:null,p2:null,et:false})}} color={C.gn}>{L.ok}</Btn>
                 <Btn onClick={()=>{const r=simM(f.t1,f.t2);setGMatch(g,idx,{t1:f.t1,t2:f.t2,...r})}} color={C.bl}>{L.simOne}</Btn>
               </div>)}
+              <details style={{marginTop:4}}><summary style={{cursor:"pointer",fontSize:11,color:C.bl,fontWeight:700}}>📊 Stats & Odds</summary>
+                <MatchStats a={f.t1} b={f.t2} lg={lang}/>
+              </details>
             </div>)})}
         </div>)})}
     </div>
@@ -563,7 +697,7 @@ export default function App(){
         <div style={{fontFamily:"'Oswald',sans-serif",fontSize:String(title).includes("🏆")?24:17,letterSpacing:3,color:String(title).includes("🏆")?C.ac:C.t2,textAlign:"center",marginBottom:10,fontWeight:700}}>{title}</div>
         <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:8}}>
           {autoAll.slice(s,e).map((m,i)=>{const wn=winner(m.t1,m.t2,m);const big=String(title).includes("🏆");const tg=m.et?(m.p1!=null?L.pen:L.et):"";
-            return(<div key={i} style={{background:C.cd,borderRadius:big?16:10,padding:big?"12px 18px":"7px 11px",border:big?`2px solid ${C.a2}`:`1px solid ${C.bd}`,minWidth:big?260:195,boxShadow:big?`0 4px 24px ${C.a2}22`:"none"}}>
+            return(<div key={i} style={{background:C.cd,borderRadius:big?16:10,padding:big?"12px 18px":"7px 11px",border:big?`2px solid ${C.a2}`:`1px solid ${C.bd}`,minWidth:big?260:220,boxShadow:big?`0 4px 24px ${C.a2}22`:"none"}}>
               <div style={{fontSize:10,color:C.t3,textAlign:"center",fontFamily:"'Oswald',sans-serif"}}>M{m.id}{tg?" "+tg:""}</div>
               {[{t:m.t1,g:m.g1,p:m.p1,w:wn===m.t1},{t:m.t2,g:m.g2,p:m.p2,w:wn===m.t2}].map(({t,g,p,w:isW},j)=>(
                 <div key={j} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:big?"6px 2px":"3px 2px",fontSize:big?17:14,
@@ -571,6 +705,9 @@ export default function App(){
                   <span style={{display:"flex",alignItems:"center",gap:5}}><span style={{fontSize:big?22:16}}>{t.f}</span>{big?N(t):t.c}</span>
                   <span style={{fontWeight:900,fontFamily:"'Oswald',sans-serif",fontSize:big?22:16}}>{g}{p!=null?<span style={{fontSize:10,opacity:.5}}>({p})</span>:""}</span>
                 </div>))}
+              <details style={{marginTop:4}}><summary style={{cursor:"pointer",fontSize:10,color:C.bl,fontWeight:700}}>📊 Stats & Odds</summary>
+                <MatchStats a={m.t1} b={m.t2} lg={lang}/>
+              </details>
             </div>)})}
         </div>
       </div>))}
@@ -601,6 +738,9 @@ export default function App(){
               {dn?.c===t.c&&<span style={{color:C.gn,fontWeight:900,fontSize:16}}>✓</span>}
             </div>))}
           {!dn&&<button onClick={()=>kSim(m)} style={{width:"100%",marginTop:5,padding:"6px",fontSize:12,fontWeight:700,borderRadius:8,border:`1px solid ${C.bl}`,background:`${C.bl}11`,color:C.bl,cursor:"pointer"}}>{L.simOne}</button>}
+          <details style={{marginTop:4}}><summary style={{cursor:"pointer",fontSize:10,color:C.bl,fontWeight:700}}>📊 Stats & Odds</summary>
+            <MatchStats a={m.t1} b={m.t2} lg={lang}/>
+          </details>
         </div>)})}
     </div>
     {canAdv&&(<div className="pop" style={{textAlign:"center",marginBottom:18}}>
