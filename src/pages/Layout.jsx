@@ -24,7 +24,6 @@ export default function Layout({ children, title }) {
           <Link to="/schedule" style={S.link}>Schedule</Link>
           <Link to="/predictions" style={S.link}>Predictions</Link>
           <Link to="/betting" style={{...S.link, color: '#d4145a', fontWeight: 800}}>📊 Betting</Link>
-          <Link to="/morocco" style={S.link}>Morocco</Link>
         </nav>
       </div>
       {title && (
@@ -34,7 +33,10 @@ export default function Layout({ children, title }) {
       )}
       <div style={S.content}>{children}</div>
       <div style={S.footer}>
-        <div>FIFA World Cup 2026 Simulator — 48 Teams — Official Bracket</div>
+        <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: 1 }}>
+          WORLD CUP 2026 SIMULATOR — ZOUHAIRE EL MATAR{' '}
+          <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', fontSize: 12 }}>💬</a>
+        </div>
         <div style={{ marginTop: 6 }}>
           <Link to="/privacy" style={{ color: '#9999bb', fontSize: 11 }}>Privacy Policy</Link>
         </div>
