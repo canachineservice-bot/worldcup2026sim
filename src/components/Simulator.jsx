@@ -353,10 +353,160 @@ export default function App(){
 
   const roundNames={r32:L.r32,r16:L.r16,qf:L.qf,sf:L.sf,final:L.final+" & "+L.third};
 
-  // Share
+  // ── BRACKET IMAGE GENERATOR ──
+  const bracketRef=useRef(null);
+  const generateBracketImage=useCallback(()=>{
+    if(!champ)return;
+    // Collect all knockout matches
+    let matches=[];
+    if(mode==="auto"&&autoAll){
+      matches=autoAll;
+    } else {
+      // Manual/quick: reconstruct from koH + koW + koM
+      if(!br)return;
+      const all=[];
+      br.r32.forEach(m=>{all.push({id:m.id,t1:m.t1,t2:m.t2,g1:0,g2:0})});
+      br.r16.forEach(([id])=>all.push({id,t1:null,t2:null,g1:0,g2:0}));
+      br.qf.forEach(([id])=>all.push({id,t1:null,t2:null,g1:0,g2:0}));
+      br.sf.forEach(([id])=>all.push({id,t1:null,t2:null,g1:0,g2:0}));
+      all.push({id:103,t1:null,t2:null,g1:0,g2:0});
+      all.push({id:104,t1:null,t2:null,g1:0,g2:0});
+      matches=all;
+    }
+
+    // Build lookup: matchId → {t1, t2, g1, g2, winner}
+    const mLookup={};
+    matches.forEach(m=>{
+      const wn=winner(m.t1,m.t2,m);
+      mLookup[m.id]={t1:m.t1,t2:m.t2,g1:m.g1??0,g2:m.g2??0,p1:m.p1,p2:m.p2,wn};
+    });
+
+    // Rounds structure for the bracket visual
+    const rounds=[
+      {name:L.r32,ids:[73,74,75,77,76,78,79,80,83,81,84,82,86,85,88,87]},
+      {name:L.r16,ids:[89,90,91,92,93,94,95,96]},
+      {name:L.qf,ids:[97,98,99,100]},
+      {name:L.sf,ids:[101,102]},
+      {name:L.final,ids:[104]},
+    ];
+
+    // Canvas setup
+    const W=1200,slotH=52,gap=6,roundW=200,roundGap=40,padX=40,padTop=100,padBot=80;
+    const maxSlots=rounds[0].ids.length*2; // R32 has 16 matches = 32 slots
+    const H=padTop+maxSlots*(slotH+gap)+padBot;
+    const canvas=document.createElement("canvas");
+    canvas.width=W;canvas.height=H;
+    const ctx=canvas.getContext("2d");
+
+    // Background
+    ctx.fillStyle="#0a1628";ctx.fillRect(0,0,W,H);
+
+    // Title
+    ctx.fillStyle="#fbb03b";ctx.font="bold 32px Oswald,sans-serif";ctx.textAlign="center";
+    ctx.fillText("FIFA WORLD CUP 2026",W/2,44);
+    ctx.fillStyle="#ffffff88";ctx.font="14px Oswald,sans-serif";
+    ctx.fillText("wcupsim.com — BRACKET RESULTS",W/2,68);
+
+    // Champion banner at top
+    if(champ){
+      ctx.fillStyle="#d4145a";ctx.font="bold 18px Oswald,sans-serif";
+      ctx.fillText(`🏆 ${N(champ).toUpperCase()} 🏆`,W/2,92);
+    }
+
+    // Draw each round
+    const drawTeamSlot=(x,y,w,team,score,isWinner,pen)=>{
+      // Background
+      ctx.fillStyle=isWinner?"#1a3a2a":"#141e30";
+      ctx.beginPath();ctx.roundRect(x,y,w,slotH-2,6);ctx.fill();
+      ctx.strokeStyle=isWinner?"#00a854":"#2a3a5a";ctx.lineWidth=1;
+      ctx.beginPath();ctx.roundRect(x,y,w,slotH-2,6);ctx.stroke();
+      if(!team)return;
+      // Flag (text emoji)
+      ctx.font="18px sans-serif";ctx.textAlign="left";
+      ctx.fillText(team.f||"",x+8,y+slotH/2+1);
+      // Country code
+      ctx.fillStyle=isWinner?"#ffffff":"#99aabb";
+      ctx.font=`${isWinner?"bold ":""}14px Oswald,sans-serif`;ctx.textAlign="left";
+      ctx.fillText(team.c||"",x+34,y+slotH/2+1);
+      // Score
+      ctx.fillStyle=isWinner?"#00a854":"#667788";
+      ctx.font="bold 16px Oswald,sans-serif";ctx.textAlign="right";
+      const scoreText=pen!=null?`${score} (${pen})`:`${score}`;
+      ctx.fillText(scoreText,x+w-10,y+slotH/2+1);
+    };
+
+    const drawConnectors=(x1,y1,h1,x2,y2)=>{
+      ctx.strokeStyle="#2a3a5a";ctx.lineWidth=1;ctx.beginPath();
+      const midX=(x1+x2)/2;
+      ctx.moveTo(x1,y1+h1/2);ctx.lineTo(midX,y1+h1/2);
+      ctx.lineTo(midX,y2+h1/2);ctx.lineTo(x2,y2+h1/2);
+      ctx.stroke();
+    };
+
+    // Calculate positions for each round
+    const positions={};
+    rounds.forEach((round,ri)=>{
+      const n=round.ids.length;
+      const totalH=maxSlots*(slotH+gap);
+      const spacing=totalH/n;
+      const x=padX+ri*(roundW+roundGap);
+
+      // Round label
+      ctx.fillStyle="#fbb03b";ctx.font="bold 13px Oswald,sans-serif";ctx.textAlign="center";
+      ctx.fillText(round.name.toUpperCase(),x+roundW/2,padTop-12);
+
+      round.ids.forEach((id,mi)=>{
+        const m=mLookup[id];
+        const centerY=padTop+mi*spacing+spacing/2-(slotH+gap/2);
+        const y1=centerY;
+        const y2=centerY+slotH+gap/2;
+
+        if(m){
+          const w1=m.wn&&m.t1&&m.wn.c===m.t1.c;
+          const w2=m.wn&&m.t2&&m.wn.c===m.t2.c;
+          drawTeamSlot(x,y1,roundW,m.t1,m.g1,w1,m.p1);
+          drawTeamSlot(x,y2,roundW,m.t2,m.g2,w2,m.p2);
+        } else {
+          drawTeamSlot(x,y1,roundW,null,0,false);
+          drawTeamSlot(x,y2,roundW,null,0,false);
+        }
+        positions[id]={x:x+roundW,y1,y2};
+
+        // Draw connectors to next round
+        if(ri<rounds.length-1){
+          const nextRound=rounds[ri+1];
+          const nextIdx=Math.floor(mi/2);
+          if(mi%2===0&&nextRound.ids[nextIdx]){
+            const nn=nextRound.ids.length;
+            const ns=totalH/nn;
+            const nx=padX+(ri+1)*(roundW+roundGap);
+            const ncy=padTop+nextIdx*ns+ns/2-(slotH+gap/2);
+            const midY1=(y1+y2)/2+slotH/2;
+            // Draw line from this match to next
+            ctx.strokeStyle="#2a3a5a55";ctx.lineWidth=1;ctx.beginPath();
+            ctx.moveTo(x+roundW,midY1);
+            ctx.lineTo(x+roundW+roundGap/2,midY1);
+            ctx.stroke();
+          }
+        }
+      });
+    });
+
+    // Watermark
+    ctx.fillStyle="#ffffff22";ctx.font="11px Oswald,sans-serif";ctx.textAlign="center";
+    ctx.fillText("Generated by wcupsim.com — FIFA World Cup 2026 Simulator",W/2,H-20);
+
+    // Download
+    const link=document.createElement("a");
+    link.download="worldcup2026-bracket.png";
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+  },[champ,mode,autoAll,br,koW,N,L]);
+
+  // Share (text or bracket image)
   const doShare=useCallback(()=>{
     if(!champ)return;
-    const text=`${L.champion}: ${champ.f} ${N(champ)}! 🏆⚽\n\nWorldCup2026Simulator.com`;
+    const text=`${L.champion}: ${champ.f} ${N(champ)}! 🏆⚽\n\nwcupsim.com`;
     if(navigator.share){navigator.share({title:L.title,text})}
     else if(navigator.clipboard){navigator.clipboard.writeText(text)}
   },[champ,L,N]);
@@ -451,6 +601,7 @@ export default function App(){
     <div style={{fontSize:44,marginTop:4}}>{champ.f}</div>
     <div style={{fontFamily:"'Oswald',sans-serif",fontSize:30,fontWeight:800,color:C.ac,marginTop:2}}>{N(champ).toUpperCase()}</div>
     <div style={{display:"flex",gap:10,justifyContent:"center",marginTop:14,flexWrap:"wrap"}}>
+      <button onClick={generateBracketImage} style={{padding:"10px 20px",fontSize:13,fontWeight:700,borderRadius:10,border:`1px solid ${C.gn}`,background:`${C.gn}11`,color:C.gn,cursor:"pointer"}}>📸 Download Bracket</button>
       <button onClick={doShare} style={{padding:"10px 20px",fontSize:13,fontWeight:700,borderRadius:10,border:`1px solid ${C.bl}`,background:`${C.bl}11`,color:C.bl,cursor:"pointer"}}>{L.share}</button>
       <a href={AFF_LINK} target="_blank" rel="noopener noreferrer" style={{padding:"10px 20px",fontSize:13,fontWeight:700,borderRadius:10,border:"none",background:"linear-gradient(135deg,#d4145a,#ff6b35)",color:"#fff",cursor:"pointer",textDecoration:"none"}}>{L.bet} 🎰</a>
     </div>
