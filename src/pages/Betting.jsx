@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Layout from './Layout'
 
-const AFF_LINK="https://refpa7921972.top/L?tag=d_3955339m_97c_&site=3955339&ad=97";
+const AFF_LINK="https://reffpa.com/L?tag=d_5397279m_97c_&site=5397279&ad=97";
 
 // The Odds API — free tier (500 requests/month)
 const ODDS_API_KEY="e1f5c898403867044fb688cb05e93aeb";

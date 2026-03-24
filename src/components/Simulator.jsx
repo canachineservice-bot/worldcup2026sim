@@ -90,7 +90,7 @@ POR:{c:"POR",f:"🇵🇹",g:"K",rt:86,rk:4,wc:5,fm:7,df:7,ho:0,xg:1.8,gpm:1.9,cs
 ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:85,rk:4,wc:6,fm:7,df:7,ho:0,xg:1.7,gpm:1.8,cs:36,rcf:"WDWWW",pos:57},CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:79,rk:18,wc:5,fm:6,df:7,ho:0,xg:1.2,gpm:1.3,cs:34,rcf:"DWWDW",pos:54},GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:66,rk:44,wc:2,fm:5,df:4,ho:0,xg:0.9,gpm:1.0,cs:18,rcf:"WLDLD",pos:45},PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:58,rk:72,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:14,rcf:"LLDWL",pos:40},
 };
 
-const AFF_LINK="https://refpa7921972.top/L?tag=d_3955339m_97c_&site=3955339&ad=97";
+const AFF_LINK="https://reffpa.com/L?tag=d_5397279m_97c_&site=5397279&ad=97";
 const GS=["A","B","C","D","E","F","G","H","I","J","K","L"];
 const gT=g=>Object.values(TM).filter(t=>t.g===g);
 const nm=(code,lg)=>TN[code]?.[lg]||code;
