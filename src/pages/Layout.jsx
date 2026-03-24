@@ -34,8 +34,7 @@ export default function Layout({ children, title }) {
       <div style={S.content}>{children}</div>
       <div style={S.footer}>
         <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: 1 }}>
-          WORLD CUP 2026 SIMULATOR — ZOUHAIRE EL MATAR{' '}
-          <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', fontSize: 12 }}>💬</a>
+          WORLD CUP 2026 SIMULATOR — WCUPSIM.COM
         </div>
         <div style={{ marginTop: 6 }}>
           <Link to="/privacy" style={{ color: '#9999bb', fontSize: 11 }}>Privacy Policy</Link>

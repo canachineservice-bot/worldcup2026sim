@@ -711,7 +711,7 @@ export default function App(){
 
     // Watermark
     ctx.fillStyle="rgba(255,255,255,0.15)";ctx.font=`600 ${7*SCALE}px Oswald,sans-serif`;ctx.textAlign="center";ctx.textBaseline="bottom";
-    ctx.fillText("wcupsim.com — FIFA World Cup 2026 Simulator — by Zouhaire El Matar",W/2,H-10*SCALE);
+    ctx.fillText("wcupsim.com — FIFA World Cup 2026 Simulator",W/2,H-10*SCALE);
 
     // Download
     const link=document.createElement("a");
@@ -1022,8 +1022,7 @@ export default function App(){
   {/* ── FOOTER ── */}
   <div style={{textAlign:"center",padding:"14px 12px 32px"}}>
     <div style={{fontFamily:"'Oswald',sans-serif",fontSize:10,fontWeight:600,letterSpacing:1,color:C.t3}}>
-      WORLD CUP 2026 SIMULATOR — ZOUHAIRE EL MATAR{" "}
-      <a href="https://wa.me/15142654409" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",fontSize:12,verticalAlign:"middle"}}>💬</a>
+      WORLD CUP 2026 SIMULATOR — WCUPSIM.COM
     </div>
   </div>
   </div>);
