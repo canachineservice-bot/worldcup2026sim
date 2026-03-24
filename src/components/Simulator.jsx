@@ -72,22 +72,70 @@ es:{flag:"🇪🇸",label:"Español",title:"COPA DEL MUNDO 2026",sub:"EE.UU. •
 hi:{flag:"🇮🇳",label:"हिन्दी",title:"विश्व कप 2026",sub:"अमेरिका • मैक्सिको • कनाडा",teams:"टीमें",chooseMode:"मोड चुनें",auto:"⚡ ऑटो सिमुलेशन",autoD:"सब कुछ स्वचालित",manual:"🎮 मैनुअल सिमुलेशन",manualD:"हर मैच का स्कोर चुनें",quick:"🏆 क्विक मैनुअल",quickD:"ग्रुप में रैंक करें फिर चुनें कौन आगे बढ़े",groups:"ग्रुप चरण",best3:"8 सर्वश्रेष्ठ तीसरे",r32:"32 का दौर",r16:"16 का दौर",qf:"क्वार्टर फाइनल",sf:"सेमी फाइनल",final:"फाइनल",third:"तीसरा स्थान",champion:"2026 विश्व चैंपियन",chMode:"← मोड",next:"अगला ➡️",seeC:"🏆 चैंपियन",pickW:"विजेता चुनें या सिमुलेट करें",simOne:"⚡ सिमुलेट",simAll:"⚡ सब सिमुलेट",goKO:"नॉकआउट ➡️",done:"पूर्ण",group:"ग्रुप",mp:"मैच",w:"जीत",d:"ड्रॉ",l:"हार",gf:"गो+",ga:"गो-",gd:"गो.अ.",pts:"अंक",chLang:"🌐",et:"अ.स.",pen:"पेन",ok:"✓",resim:"🔄 पुनः",rankHint:"▲ ▼ से 1→4 रैंक करें",bet:"इस पर दांव लगाएं →",share:"📤 परिणाम शेयर करें",pick3:"12 में से 8 तीसरे स्थान की टीमें चुनें जो क्वालिफाई करें",pick3count:"तीसरे चुने गए",of:"में से"},
 };
 
-// ── TEAMS ──
-// rt: composite rating, rk: FIFA rank, wc: WC pedigree, fm: form (0-10), df: defense (0-10), ho: host bonus
-// xg: xG per 90, gpm: goals per match, cs: clean sheet % (0-100), rcf: recent form (last 5), pos: possession %
+// ── TEAMS ── (March 2026 FIFA Rankings + historical WC data + current form)
+// rt: FIFA points (scaled 0-100), rk: FIFA rank, wc: WC titles, wcb: best WC result (1=winner,2=final,3=semi,4=QF,5=R16,6=group,0=never),
+// fm: current form 0-10, df: defensive solidity 0-10, ho: host bonus, tier: 1=elite,2=strong,3=mid,4=weak,5=debutant
 const TM={
-MEX:{c:"MEX",f:"🇲🇽",g:"A",rt:82,rk:15,wc:3,fm:6,df:6,ho:1,xg:1.4,gpm:1.5,cs:30,rcf:"WDWLD",pos:52},KOR:{c:"KOR",f:"🇰🇷",g:"A",rt:76,rk:23,wc:2,fm:5,df:5,ho:0,xg:1.1,gpm:1.2,cs:25,rcf:"WLDWL",pos:49},RSA:{c:"RSA",f:"🇿🇦",g:"A",rt:65,rk:59,wc:1,fm:4,df:4,ho:0,xg:0.8,gpm:0.9,cs:20,rcf:"LDWDL",pos:44},DEN:{c:"DEN",f:"🇩🇰",g:"A",rt:78,rk:19,wc:2,fm:6,df:7,ho:0,xg:1.3,gpm:1.4,cs:38,rcf:"WWDLD",pos:54},
-CAN:{c:"CAN",f:"🇨🇦",g:"B",rt:72,rk:40,wc:0,fm:5,df:5,ho:1,xg:1.0,gpm:1.1,cs:22,rcf:"WDLDW",pos:47},SUI:{c:"SUI",f:"🇨🇭",g:"B",rt:80,rk:16,wc:2,fm:6,df:7,ho:0,xg:1.3,gpm:1.3,cs:35,rcf:"DWWDW",pos:53},QAT:{c:"QAT",f:"🇶🇦",g:"B",rt:62,rk:45,wc:0,fm:3,df:4,ho:0,xg:0.7,gpm:0.7,cs:18,rcf:"LLDLL",pos:42},ITA:{c:"ITA",f:"🇮🇹",g:"B",rt:83,rk:9,wc:8,fm:7,df:8,ho:0,xg:1.5,gpm:1.6,cs:42,rcf:"WWWDL",pos:55},
-BRA:{c:"BRA",f:"🇧🇷",g:"C",rt:87,rk:5,wc:10,fm:6,df:5,ho:0,xg:1.8,gpm:1.9,cs:28,rcf:"WDWLW",pos:58},MAR:{c:"MAR",f:"🇲🇦",g:"C",rt:79,rk:14,wc:4,fm:7,df:8,ho:0,xg:1.3,gpm:1.4,cs:45,rcf:"WWWDW",pos:51},SCO:{c:"SCO",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",rt:70,rk:36,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.0,cs:22,rcf:"DLWLD",pos:46},HAI:{c:"HAI",f:"🇭🇹",g:"C",rt:52,rk:88,wc:0,fm:3,df:3,ho:0,xg:0.5,gpm:0.6,cs:10,rcf:"LLDLD",pos:38},
-USA:{c:"USA",f:"🇺🇸",g:"D",rt:81,rk:11,wc:2,fm:7,df:6,ho:2,xg:1.5,gpm:1.6,cs:32,rcf:"WWWDW",pos:54},AUS:{c:"AUS",f:"🇦🇺",g:"D",rt:73,rk:25,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.1,cs:24,rcf:"WDLWL",pos:48},PAR:{c:"PAR",f:"🇵🇾",g:"D",rt:70,rk:43,wc:1,fm:4,df:5,ho:0,xg:0.9,gpm:1.0,cs:26,rcf:"DLDWL",pos:45},TUR:{c:"TUR",f:"🇹🇷",g:"D",rt:77,rk:26,wc:3,fm:6,df:5,ho:0,xg:1.3,gpm:1.4,cs:28,rcf:"WWDLW",pos:52},
-GER:{c:"GER",f:"🇩🇪",g:"E",rt:84,rk:8,wc:9,fm:7,df:6,ho:0,xg:1.7,gpm:1.8,cs:30,rcf:"WWDWL",pos:57},CIV:{c:"CIV",f:"🇨🇮",g:"E",rt:72,rk:38,wc:1,fm:6,df:4,ho:0,xg:1.1,gpm:1.2,cs:20,rcf:"WWDLD",pos:47},ECU:{c:"ECU",f:"🇪🇨",g:"E",rt:71,rk:33,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.1,cs:24,rcf:"DWLDW",pos:46},CUR:{c:"CUR",f:"🇨🇼",g:"E",rt:48,rk:83,wc:0,fm:3,df:3,ho:0,xg:0.4,gpm:0.5,cs:8,rcf:"LLLLD",pos:35},
-NED:{c:"NED",f:"🇳🇱",g:"F",rt:83,rk:7,wc:6,fm:7,df:7,ho:0,xg:1.6,gpm:1.7,cs:36,rcf:"WWWDW",pos:57},TUN:{c:"TUN",f:"🇹🇳",g:"F",rt:68,rk:39,wc:1,fm:5,df:6,ho:0,xg:0.9,gpm:1.0,cs:30,rcf:"DWDLL",pos:45},JPN:{c:"JPN",f:"🇯🇵",g:"F",rt:80,rk:13,wc:3,fm:8,df:6,ho:0,xg:1.5,gpm:1.6,cs:32,rcf:"WWWWL",pos:55},UKR:{c:"UKR",f:"🇺🇦",g:"F",rt:75,rk:22,wc:2,fm:5,df:5,ho:0,xg:1.1,gpm:1.2,cs:24,rcf:"WDLDW",pos:50},
-BEL:{c:"BEL",f:"🇧🇪",g:"G",rt:80,rk:6,wc:3,fm:5,df:6,ho:0,xg:1.4,gpm:1.5,cs:30,rcf:"DLDWW",pos:55},IRN:{c:"IRN",f:"🇮🇷",g:"G",rt:72,rk:21,wc:1,fm:5,df:6,ho:0,xg:0.9,gpm:1.0,cs:32,rcf:"WDDLW",pos:44},EGY:{c:"EGY",f:"🇪🇬",g:"G",rt:70,rk:31,wc:1,fm:5,df:5,ho:0,xg:1.0,gpm:1.1,cs:26,rcf:"DWWDL",pos:47},NZL:{c:"NZL",f:"🇳🇿",g:"G",rt:55,rk:95,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:14,rcf:"LLDWL",pos:40},
-ESP:{c:"ESP",f:"🇪🇸",g:"H",rt:90,rk:1,wc:9,fm:9,df:8,ho:0,xg:2.1,gpm:2.2,cs:48,rcf:"WWWWW",pos:65},URU:{c:"URU",f:"🇺🇾",g:"H",rt:80,rk:10,wc:6,fm:6,df:7,ho:0,xg:1.3,gpm:1.4,cs:34,rcf:"WWDLW",pos:50},KSA:{c:"KSA",f:"🇸🇦",g:"H",rt:67,rk:56,wc:1,fm:4,df:4,ho:0,xg:0.8,gpm:0.9,cs:18,rcf:"WLDLL",pos:43},CPV:{c:"CPV",f:"🇨🇻",g:"H",rt:55,rk:62,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:16,rcf:"DWLLD",pos:42},
-FRA:{c:"FRA",f:"🇫🇷",g:"I",rt:88,rk:3,wc:9,fm:7,df:7,ho:0,xg:1.9,gpm:2.0,cs:40,rcf:"WWDWW",pos:58},SEN:{c:"SEN",f:"🇸🇳",g:"I",rt:75,rk:20,wc:2,fm:6,df:5,ho:0,xg:1.1,gpm:1.2,cs:26,rcf:"WDWDL",pos:48},NOR:{c:"NOR",f:"🇳🇴",g:"I",rt:74,rk:17,wc:1,fm:7,df:5,ho:0,xg:1.4,gpm:1.5,cs:24,rcf:"WWWDL",pos:52},IRQ:{c:"IRQ",f:"🇮🇶",g:"I",rt:63,rk:55,wc:0,fm:4,df:4,ho:0,xg:0.7,gpm:0.8,cs:16,rcf:"DLDLW",pos:42},
-ARG:{c:"ARG",f:"🇦🇷",g:"J",rt:89,rk:2,wc:10,fm:8,df:7,ho:0,xg:2.0,gpm:2.1,cs:42,rcf:"WWWWD",pos:60},AUT:{c:"AUT",f:"🇦🇹",g:"J",rt:76,rk:24,wc:2,fm:6,df:6,ho:0,xg:1.2,gpm:1.3,cs:28,rcf:"WDWLD",pos:52},JOR:{c:"JOR",f:"🇯🇴",g:"J",rt:64,rk:68,wc:0,fm:5,df:5,ho:0,xg:0.7,gpm:0.8,cs:18,rcf:"DWLWD",pos:43},ALG:{c:"ALG",f:"🇩🇿",g:"J",rt:68,rk:37,wc:1,fm:5,df:5,ho:0,xg:0.9,gpm:1.0,cs:22,rcf:"WDLDL",pos:46},
-POR:{c:"POR",f:"🇵🇹",g:"K",rt:86,rk:4,wc:5,fm:7,df:7,ho:0,xg:1.8,gpm:1.9,cs:38,rcf:"WWWDW",pos:58},COL:{c:"COL",f:"🇨🇴",g:"K",rt:81,rk:12,wc:2,fm:7,df:6,ho:0,xg:1.4,gpm:1.5,cs:30,rcf:"WWDWL",pos:54},UZB:{c:"UZB",f:"🇺🇿",g:"K",rt:66,rk:53,wc:0,fm:5,df:5,ho:0,xg:0.8,gpm:0.9,cs:20,rcf:"DWDLW",pos:44},COD:{c:"COD",f:"🇨🇩",g:"K",rt:60,rk:49,wc:0,fm:4,df:4,ho:0,xg:0.7,gpm:0.8,cs:14,rcf:"LLDWW",pos:42},
-ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:85,rk:4,wc:6,fm:7,df:7,ho:0,xg:1.7,gpm:1.8,cs:36,rcf:"WDWWW",pos:57},CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:79,rk:18,wc:5,fm:6,df:7,ho:0,xg:1.2,gpm:1.3,cs:34,rcf:"DWWDW",pos:54},GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:66,rk:44,wc:2,fm:5,df:4,ho:0,xg:0.9,gpm:1.0,cs:18,rcf:"WLDLD",pos:45},PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:58,rk:72,wc:0,fm:4,df:4,ho:0,xg:0.6,gpm:0.7,cs:14,rcf:"LLDWL",pos:40},
+// Group A
+MEX:{c:"MEX",f:"🇲🇽",g:"A",rt:84,rk:15,wc:0,wcb:4,fm:6,df:6,ho:1,tier:2},
+KOR:{c:"KOR",f:"🇰🇷",g:"A",rt:78,rk:22,wc:0,wcb:3,fm:6,df:6,ho:0,tier:3},
+RSA:{c:"RSA",f:"🇿🇦",g:"A",rt:62,rk:61,wc:0,wcb:6,fm:4,df:4,ho:0,tier:4},
+DEN:{c:"DEN",f:"🇩🇰",g:"A",rt:80,rk:21,wc:0,wcb:4,fm:6,df:7,ho:0,tier:2},
+// Group B
+CAN:{c:"CAN",f:"🇨🇦",g:"B",rt:74,rk:27,wc:0,wcb:6,fm:5,df:5,ho:1,tier:3},
+SUI:{c:"SUI",f:"🇨🇭",g:"B",rt:81,rk:18,wc:0,wcb:4,fm:6,df:7,ho:0,tier:2},
+QAT:{c:"QAT",f:"🇶🇦",g:"B",rt:60,rk:51,wc:0,wcb:6,fm:3,df:4,ho:0,tier:4},
+ITA:{c:"ITA",f:"🇮🇹",g:"B",rt:85,rk:12,wc:4,wcb:1,fm:7,df:8,ho:0,tier:1},
+// Group C
+BRA:{c:"BRA",f:"🇧🇷",g:"C",rt:88,rk:6,wc:5,wcb:1,fm:6,df:5,ho:0,tier:1},
+MAR:{c:"MAR",f:"🇲🇦",g:"C",rt:89,rk:5,wc:0,wcb:3,fm:8,df:8,ho:0,tier:1},
+SCO:{c:"SCO",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",rt:68,rk:35,wc:0,wcb:6,fm:5,df:5,ho:0,tier:3},
+HAI:{c:"HAI",f:"🇭🇹",g:"C",rt:48,rk:84,wc:0,wcb:6,fm:3,df:3,ho:0,tier:5},
+// Group D
+USA:{c:"USA",f:"🇺🇸",g:"D",rt:84,rk:14,wc:0,wcb:3,fm:7,df:6,ho:2,tier:2},
+AUS:{c:"AUS",f:"🇦🇺",g:"D",rt:73,rk:26,wc:0,wcb:5,fm:5,df:5,ho:0,tier:3},
+PAR:{c:"PAR",f:"🇵🇾",g:"D",rt:68,rk:37,wc:0,wcb:5,fm:4,df:5,ho:0,tier:3},
+TUR:{c:"TUR",f:"🇹🇷",g:"D",rt:79,rk:25,wc:0,wcb:3,fm:6,df:5,ho:0,tier:2},
+// Group E
+GER:{c:"GER",f:"🇩🇪",g:"E",rt:86,rk:10,wc:4,wcb:1,fm:7,df:6,ho:0,tier:1},
+CIV:{c:"CIV",f:"🇨🇮",g:"E",rt:70,rk:40,wc:0,wcb:6,fm:6,df:4,ho:0,tier:3},
+ECU:{c:"ECU",f:"🇪🇨",g:"E",rt:75,rk:23,wc:0,wcb:5,fm:5,df:5,ho:0,tier:3},
+CUR:{c:"CUR",f:"🇨🇼",g:"E",rt:42,rk:82,wc:0,wcb:0,fm:2,df:2,ho:0,tier:5},
+// Group F
+NED:{c:"NED",f:"🇳🇱",g:"F",rt:88,rk:8,wc:0,wcb:2,fm:7,df:7,ho:0,tier:1},
+TUN:{c:"TUN",f:"🇹🇳",g:"F",rt:67,rk:38,wc:0,wcb:6,fm:5,df:6,ho:0,tier:3},
+JPN:{c:"JPN",f:"🇯🇵",g:"F",rt:82,rk:19,wc:0,wcb:5,fm:8,df:6,ho:0,tier:2},
+UKR:{c:"UKR",f:"🇺🇦",g:"F",rt:76,rk:28,wc:0,wcb:4,fm:5,df:5,ho:0,tier:3},
+// Group G
+BEL:{c:"BEL",f:"🇧🇪",g:"G",rt:87,rk:9,wc:0,wcb:3,fm:5,df:6,ho:0,tier:1},
+IRN:{c:"IRN",f:"🇮🇷",g:"G",rt:77,rk:20,wc:0,wcb:6,fm:5,df:6,ho:0,tier:3},
+EGY:{c:"EGY",f:"🇪🇬",g:"G",rt:68,rk:33,wc:0,wcb:6,fm:5,df:5,ho:0,tier:3},
+NZL:{c:"NZL",f:"🇳🇿",g:"G",rt:46,rk:86,wc:0,wcb:6,fm:3,df:3,ho:0,tier:5},
+// Group H
+ESP:{c:"ESP",f:"🇪🇸",g:"H",rt:94,rk:1,wc:1,wcb:1,fm:9,df:8,ho:0,tier:1},
+URU:{c:"URU",f:"🇺🇾",g:"H",rt:84,rk:16,wc:2,wcb:1,fm:6,df:7,ho:0,tier:1},
+KSA:{c:"KSA",f:"🇸🇦",g:"H",rt:60,rk:60,wc:0,wcb:5,fm:4,df:4,ho:0,tier:4},
+CPV:{c:"CPV",f:"🇨🇻",g:"H",rt:44,rk:68,wc:0,wcb:0,fm:3,df:3,ho:0,tier:5},
+// Group I
+FRA:{c:"FRA",f:"🇫🇷",g:"I",rt:94,rk:3,wc:2,wcb:1,fm:7,df:7,ho:0,tier:1},
+SEN:{c:"SEN",f:"🇸🇳",g:"I",rt:80,rk:17,wc:0,wcb:4,fm:7,df:5,ho:0,tier:2},
+NOR:{c:"NOR",f:"🇳🇴",g:"I",rt:76,rk:29,wc:0,wcb:6,fm:7,df:5,ho:0,tier:3},
+IRQ:{c:"IRQ",f:"🇮🇶",g:"I",rt:56,rk:66,wc:0,wcb:6,fm:4,df:4,ho:0,tier:4},
+// Group J
+ARG:{c:"ARG",f:"🇦🇷",g:"J",rt:94,rk:2,wc:3,wcb:1,fm:8,df:7,ho:0,tier:1},
+AUT:{c:"AUT",f:"🇦🇹",g:"J",rt:77,rk:24,wc:0,wcb:3,fm:6,df:6,ho:0,tier:3},
+JOR:{c:"JOR",f:"🇯🇴",g:"J",rt:54,rk:66,wc:0,wcb:0,fm:5,df:5,ho:0,tier:4},
+ALG:{c:"ALG",f:"🇩🇿",g:"J",rt:67,rk:34,wc:0,wcb:5,fm:5,df:5,ho:0,tier:3},
+// Group K
+POR:{c:"POR",f:"🇵🇹",g:"K",rt:88,rk:7,wc:0,wcb:3,fm:7,df:7,ho:0,tier:1},
+COL:{c:"COL",f:"🇨🇴",g:"K",rt:83,rk:13,wc:0,wcb:4,fm:7,df:6,ho:0,tier:2},
+UZB:{c:"UZB",f:"🇺🇿",g:"K",rt:58,rk:48,wc:0,wcb:0,fm:5,df:5,ho:0,tier:4},
+COD:{c:"COD",f:"🇨🇩",g:"K",rt:56,rk:49,wc:0,wcb:0,fm:4,df:4,ho:0,tier:4},
+// Group L
+ENG:{c:"ENG",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",rt:92,rk:4,wc:1,wcb:1,fm:7,df:7,ho:0,tier:1},
+CRO:{c:"CRO",f:"🇭🇷",g:"L",rt:86,rk:11,wc:0,wcb:2,fm:6,df:7,ho:0,tier:1},
+GHA:{c:"GHA",f:"🇬🇭",g:"L",rt:64,rk:72,wc:0,wcb:4,fm:5,df:4,ho:0,tier:4},
+PAN:{c:"PAN",f:"🇵🇦",g:"L",rt:55,rk:30,wc:0,wcb:6,fm:4,df:4,ho:0,tier:4},
 };
 
 const AFF_LINK="https://reffpa.com/L?tag=d_5397279m_97c_&site=5397279&ad=97";
@@ -95,61 +143,96 @@ const GS=["A","B","C","D","E","F","G","H","I","J","K","L"];
 const gT=g=>Object.values(TM).filter(t=>t.g===g);
 const nm=(code,lg)=>TN[code]?.[lg]||code;
 
-// ── SIMULATION ENGINE ──
-// Poisson distribution for realistic goal generation
+// ── SIMULATION ENGINE v2 ──
+// Realistic simulation based on FIFA rankings, WC history, form, tiers, and defense
 const poi=lam=>{let L=Math.exp(-lam),k=0,p=1;do{k++;p*=Math.random()}while(p>L);return k-1};
 
-// Composite strength: FIFA rating (50%) + WC pedigree (15%) + form (20%) + defense (10%) + host bonus (5%)
+// Composite strength heavily weighted by FIFA rating + tier + WC pedigree + form
 function getStrength(t){
-  return t.rt * 0.50
-    + (t.wc || 0) * 1.5   // WC pedigree: titles/deep runs boost (max ~15 pts)
-    + (t.fm || 5) * 2.0    // current form: 0-10 scaled to 0-20 (max ~20 pts)
-    + (t.df || 5) * 1.0    // defensive solidity: 0-10 (max ~10 pts)
-    + (t.ho || 0) * 3.0;   // host nation bonus (USA=2 → 6pts, MEX/CAN=1 → 3pts)
+  // Base: FIFA rating (0-100 scale, already calibrated)
+  let s = t.rt;
+  // Tier bonus: elite teams get consistency boost, debutants get penalty
+  const tierBonus = {1:6, 2:3, 3:0, 4:-4, 5:-10};
+  s += tierBonus[t.tier] || 0;
+  // WC experience: titles give big boost, deep runs give moderate boost
+  s += (t.wc || 0) * 2.0; // titles (ARG:3→6, BRA:5→10, FRA:2→4)
+  s += Math.max(0, (5 - (t.wcb||6))) * 1.5; // best result bonus (winner=6, final=4.5, semi=3, QF=1.5)
+  // Form: current form 0-10
+  s += ((t.fm || 5) - 5) * 1.5; // deviation from avg form
+  // Defense: solid defenders make the team harder to beat
+  s += ((t.df || 5) - 5) * 0.8;
+  // Host bonus: significant home advantage in WC
+  s += (t.ho || 0) * 4.0; // USA=2→8pts, MEX/CAN=1→4pts
+  return s;
 }
 
-// Realistic match simulation using composite strength
-// Accounts for: team quality gap, defensive matchups, KO pressure, low-scoring tendencies
+// Upset probability: lower-tier teams can still surprise, but rarely
+function upsetFactor(stronger, weaker){
+  const gap = stronger - weaker;
+  if(gap > 30) return 0.05; // Near impossible upset (Spain vs Cape Verde)
+  if(gap > 20) return 0.10; // Very unlikely (France vs Haiti)
+  if(gap > 15) return 0.18; // Unlikely but possible (Germany vs Curacao)
+  if(gap > 10) return 0.25; // Occasional upset (Netherlands vs Tunisia)
+  if(gap > 5) return 0.35;  // Competitive (Morocco vs Denmark)
+  return 0.42; // Close match
+}
+
 function simM(a,b,ko=false){
   const sA=getStrength(a), sB=getStrength(b);
-  const diff=(sA-sB)/100;
+  const gap=Math.abs(sA-sB);
+  const diff=(sA-sB)/80; // Normalized difference (wider scale = bigger impact)
 
-  // Base expected goals: ~1.25 average, adjusted by strength diff
-  // Defensive teams concede less: opponent xG reduced by high df
-  const defFactorB = 1 - ((b.df||5) - 5) * 0.04; // good defense (df=8) reduces opponent xG by ~12%
-  const defFactorA = 1 - ((a.df||5) - 5) * 0.04;
+  // Defense impact: good defense reduces opponent's xG significantly
+  const defFactorB = 1 - ((b.df||5) - 5) * 0.06; // df=8 → -18% opponent xG
+  const defFactorA = 1 - ((a.df||5) - 5) * 0.06;
 
-  // KO matches tend to be tighter / more cagey
-  const koFactor = ko ? 0.88 : 1.0;
+  // KO matches: tighter, more tactical, lower scoring
+  const koFactor = ko ? 0.82 : 1.0;
 
-  const xgA = Math.max(0.25, (1.25 + diff * 2.0) * defFactorB * koFactor);
-  const xgB = Math.max(0.25, (1.25 - diff * 2.0) * defFactorA * koFactor);
+  // Tier-based xG floor: debutants score much less
+  const tierXgMod = t => {
+    if(t.tier === 5) return 0.65; // Debutants: heavily reduced attacking output
+    if(t.tier === 4) return 0.80; // Weak: below average
+    if(t.tier === 1) return 1.10; // Elite: above average
+    return 1.0;
+  };
+
+  // Base xG: WC average ~1.3 goals per team per match
+  let xgA = Math.max(0.15, (1.30 + diff * 2.5) * defFactorB * koFactor * tierXgMod(a));
+  let xgB = Math.max(0.15, (1.30 - diff * 2.5) * defFactorA * koFactor * tierXgMod(b));
+
+  // Ensure big quality gaps produce realistic scorelines
+  // e.g., Spain vs Cape Verde: Spain xG ~2.5, Cape Verde xG ~0.3
+  if(gap > 25) { // Massive gap
+    const strong = sA > sB;
+    if(strong) { xgA = Math.max(xgA, 1.8); xgB = Math.min(xgB, 0.4); }
+    else { xgB = Math.max(xgB, 1.8); xgA = Math.min(xgA, 0.4); }
+  }
 
   let x = poi(xgA), y = poi(xgB);
 
-  // Cap unrealistic scorelines: max 6 goals per team (7-0 extremely rare in WC)
-  x = Math.min(x, 6); y = Math.min(y, 6);
+  // Cap scorelines: max 5 for strong teams, max 2 for debutants/weak in WC
+  x = Math.min(x, a.tier <= 2 ? 6 : 4);
+  y = Math.min(y, b.tier <= 2 ? 6 : 4);
+  // Debutants rarely score more than 1 in WC
+  if(a.tier === 5 && x > 1 && Math.random() > 0.3) x = Math.min(x, 1);
+  if(b.tier === 5 && y > 1 && Math.random() > 0.3) y = Math.min(y, 1);
 
   if(ko && x === y){
-    // Extra time: tighter, fewer goals, slight favorite advantage
+    // Extra time
     const favA = sA >= sB;
-    const etXgA = favA ? 0.35 : 0.25;
-    const etXgB = favA ? 0.25 : 0.35;
-    const e1 = poi(etXgA);
-    const e2 = poi(etXgB);
-    x += e1; y += e2;
+    const etXgA = favA ? 0.40 : 0.25;
+    const etXgB = favA ? 0.25 : 0.40;
+    x += poi(etXgA); y += poi(etXgB);
 
     if(x === y){
-      // Penalties: slight favorite edge (55/45) + experienced teams do better
-      const wcBonus = ((a.wc||0) - (b.wc||0)) * 0.02; // WC experience helps in pens
-      const penChance = Math.min(0.65, Math.max(0.35, (favA ? 0.55 : 0.45) + wcBonus));
+      // Penalties: experience matters a lot
+      const wcExp = ((a.wc||0) - (b.wc||0)) * 0.03 + ((a.wcb||6) < (b.wcb||6) ? 0.05 : -0.05);
+      const penChance = Math.min(0.70, Math.max(0.30, (favA ? 0.55 : 0.45) + wcExp));
       const favWins = Math.random() < penChance;
-      // Realistic pen scores: 5-4, 4-3, 5-3, 6-5
       const penScores = [[5,4],[4,3],[5,3],[6,5],[4,2],[3,2]];
       const ps = penScores[Math.floor(Math.random() * penScores.length)];
-      const p1 = favWins ? ps[0] : ps[1];
-      const p2 = favWins ? ps[1] : ps[0];
-      return {g1:x, g2:y, p1, p2, et:true};
+      return {g1:x, g2:y, p1:favWins?ps[0]:ps[1], p2:favWins?ps[1]:ps[0], et:true};
     }
     return {g1:x, g2:y, p1:null, p2:null, et:true};
   }
