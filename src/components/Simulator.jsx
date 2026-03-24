@@ -353,155 +353,289 @@ export default function App(){
 
   const roundNames={r32:L.r32,r16:L.r16,qf:L.qf,sf:L.sf,final:L.final+" & "+L.third};
 
-  // ── BRACKET IMAGE GENERATOR ──
-  const bracketRef=useRef(null);
-  const generateBracketImage=useCallback(()=>{
+  // ── BRACKET IMAGE GENERATOR (FIFA-style split bracket) ──
+  const generateBracketImage=useCallback(async()=>{
     if(!champ)return;
     // Collect all knockout matches
     let matches=[];
-    if(mode==="auto"&&autoAll){
-      matches=autoAll;
-    } else {
-      // Manual/quick: reconstruct from koH + koW + koM
-      if(!br)return;
+    if(mode==="auto"&&autoAll){ matches=autoAll }
+    else if(br){
+      // Reconstruct from manual/quick data
       const all=[];
-      br.r32.forEach(m=>{all.push({id:m.id,t1:m.t1,t2:m.t2,g1:0,g2:0})});
-      br.r16.forEach(([id])=>all.push({id,t1:null,t2:null,g1:0,g2:0}));
-      br.qf.forEach(([id])=>all.push({id,t1:null,t2:null,g1:0,g2:0}));
-      br.sf.forEach(([id])=>all.push({id,t1:null,t2:null,g1:0,g2:0}));
-      all.push({id:103,t1:null,t2:null,g1:0,g2:0});
-      all.push({id:104,t1:null,t2:null,g1:0,g2:0});
+      br.r32.forEach(m=>all.push({id:m.id,t1:m.t1,t2:m.t2,g1:0,g2:0}));
+      [[br.r16,"r16"],[br.qf,"qf"],[br.sf,"sf"]].forEach(([arr])=>{
+        arr.forEach(([id])=>all.push({id,t1:null,t2:null,g1:0,g2:0}))});
+      all.push({id:103,t1:null,t2:null,g1:0,g2:0},{id:104,t1:null,t2:null,g1:0,g2:0});
       matches=all;
-    }
+    } else return;
 
-    // Build lookup: matchId → {t1, t2, g1, g2, winner}
-    const mLookup={};
-    matches.forEach(m=>{
-      const wn=winner(m.t1,m.t2,m);
-      mLookup[m.id]={t1:m.t1,t2:m.t2,g1:m.g1??0,g2:m.g2??0,p1:m.p1,p2:m.p2,wn};
-    });
+    const ML={};
+    matches.forEach(m=>{const wn=winner(m.t1,m.t2,m);ML[m.id]={t1:m.t1,t2:m.t2,g1:m.g1??0,g2:m.g2??0,p1:m.p1,p2:m.p2,wn}});
 
-    // Rounds structure for the bracket visual
-    const rounds=[
-      {name:L.r32,ids:[73,74,75,77,76,78,79,80,83,81,84,82,86,85,88,87]},
-      {name:L.r16,ids:[89,90,91,92,93,94,95,96]},
-      {name:L.qf,ids:[97,98,99,100]},
-      {name:L.sf,ids:[101,102]},
-      {name:L.final,ids:[104]},
-    ];
+    // Load flag images from Twemoji
+    const flagCache={};
+    const loadFlag=async(team)=>{
+      if(!team||!team.f||flagCache[team.c])return;
+      const cp=[...team.f].map(c=>c.codePointAt(0).toString(16)).join("-");
+      const url=`https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/${cp}.svg`;
+      try{
+        const r=await fetch(url);if(!r.ok)return;
+        const svg=await r.text();
+        const blob=new Blob([svg],{type:"image/svg+xml"});
+        const img=new Image();
+        await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=URL.createObjectURL(blob)});
+        flagCache[team.c]=img;
+      }catch(e){}
+    };
+    const allTeams=new Set();
+    matches.forEach(m=>{if(m.t1)allTeams.add(m.t1);if(m.t2)allTeams.add(m.t2)});
+    await Promise.all([...allTeams].map(loadFlag));
 
-    // Canvas setup
-    const W=1200,slotH=52,gap=6,roundW=200,roundGap=40,padX=40,padTop=100,padBot=80;
-    const maxSlots=rounds[0].ids.length*2; // R32 has 16 matches = 32 slots
-    const H=padTop+maxSlots*(slotH+gap)+padBot;
+    // ── Layout: Split bracket, left half + right half meeting at Final center ──
+    // Left side: 8 R32 matches → 4 R16 → 2 QF → 1 SF
+    // Right side: 8 R32 matches → 4 R16 → 2 QF → 1 SF
+    // Center: Final
+    const leftR32=[73,74,75,77,76,78,79,80];
+    const rightR32=[83,81,84,82,86,85,88,87];
+    const leftR16=[89,90,91,92];const rightR16=[93,94,95,96];
+    const leftQF=[97,99];const rightQF=[98,100];
+    const leftSF=[101];const rightSF=[102];
+
+    const SCALE=2; // Retina
+    const MW=160*SCALE,MH=26*SCALE,MGAP=4*SCALE,RG=30*SCALE;
+    const PAD=20*SCALE,TOPP=70*SCALE,BOTP=40*SCALE;
+    const matchH=MH*2+MGAP; // height of one match block
+    const baseMatches=8; // R32 per side
+    const totalMatchH=baseMatches*matchH+(baseMatches-1)*MGAP*3;
+    const W=PAD+4*(MW+RG)+MW+RG+4*(MW+RG)+PAD; // 4 left rounds + final + 4 right rounds
+    const H=TOPP+totalMatchH+BOTP;
+
     const canvas=document.createElement("canvas");
     canvas.width=W;canvas.height=H;
     const ctx=canvas.getContext("2d");
 
-    // Background
-    ctx.fillStyle="#0a1628";ctx.fillRect(0,0,W,H);
+    // Background gradient
+    const grad=ctx.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0,"#0b1120");grad.addColorStop(0.5,"#162040");grad.addColorStop(1,"#0b1120");
+    ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
 
-    // Title
-    ctx.fillStyle="#fbb03b";ctx.font="bold 32px Oswald,sans-serif";ctx.textAlign="center";
-    ctx.fillText("FIFA WORLD CUP 2026",W/2,44);
-    ctx.fillStyle="#ffffff88";ctx.font="14px Oswald,sans-serif";
-    ctx.fillText("wcupsim.com — BRACKET RESULTS",W/2,68);
+    // Subtle grid pattern
+    ctx.strokeStyle="rgba(255,255,255,0.02)";ctx.lineWidth=1;
+    for(let i=0;i<W;i+=40*SCALE){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke()}
+    for(let i=0;i<H;i+=40*SCALE){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke()}
 
-    // Champion banner at top
-    if(champ){
-      ctx.fillStyle="#d4145a";ctx.font="bold 18px Oswald,sans-serif";
-      ctx.fillText(`🏆 ${N(champ).toUpperCase()} 🏆`,W/2,92);
-    }
+    // Title bar
+    const titleH=50*SCALE;
+    ctx.fillStyle="rgba(0,0,0,0.4)";ctx.fillRect(0,0,W,titleH);
+    ctx.fillStyle="#fbb03b";ctx.font=`800 ${18*SCALE}px Oswald,sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText("FIFA WORLD CUP 2026™",W/2,titleH*0.35);
+    ctx.fillStyle="rgba(255,255,255,0.5)";ctx.font=`600 ${8*SCALE}px Oswald,sans-serif`;
+    ctx.fillText("USA • MEXICO • CANADA  |  wcupsim.com",W/2,titleH*0.7);
 
-    // Draw each round
-    const drawTeamSlot=(x,y,w,team,score,isWinner,pen)=>{
-      // Background
-      ctx.fillStyle=isWinner?"#1a3a2a":"#141e30";
-      ctx.beginPath();ctx.roundRect(x,y,w,slotH-2,6);ctx.fill();
-      ctx.strokeStyle=isWinner?"#00a854":"#2a3a5a";ctx.lineWidth=1;
-      ctx.beginPath();ctx.roundRect(x,y,w,slotH-2,6);ctx.stroke();
+    // Draw flag as circle
+    const drawFlag=(x,cy,r,team)=>{
       if(!team)return;
-      // Flag (text emoji)
-      ctx.font="18px sans-serif";ctx.textAlign="left";
-      ctx.fillText(team.f||"",x+8,y+slotH/2+1);
+      ctx.save();
+      ctx.beginPath();ctx.arc(x+r,cy,r,0,Math.PI*2);ctx.clip();
+      if(flagCache[team.c]){
+        ctx.drawImage(flagCache[team.c],x,cy-r,r*2,r*2);
+      }else{
+        ctx.fillStyle="#1e2d4a";ctx.fill();
+        ctx.font=`${r*1.3}px sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+        ctx.fillText(team.f||"",x+r,cy);
+      }
+      ctx.restore();
+      // Circle border
+      ctx.strokeStyle="rgba(255,255,255,0.3)";ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(x+r,cy,r,0,Math.PI*2);ctx.stroke();
+    };
+
+    // Draw a team row
+    const drawTeamRow=(x,y,w,team,score,isW,pen,mirror)=>{
+      const h=MH;
+      // Background
+      const rr=4*SCALE;
+      ctx.fillStyle=isW?"rgba(0,168,84,0.15)":"rgba(20,30,48,0.8)";
+      ctx.beginPath();ctx.roundRect(x,y,w,h,rr);ctx.fill();
+      // Left accent for winner
+      if(isW){
+        ctx.fillStyle="#00a854";
+        ctx.beginPath();ctx.roundRect(x,y,3*SCALE,h,[rr,0,0,rr]);ctx.fill();
+      }
+      // Border
+      ctx.strokeStyle=isW?"rgba(0,168,84,0.5)":"rgba(60,80,120,0.4)";ctx.lineWidth=1;
+      ctx.beginPath();ctx.roundRect(x,y,w,h,rr);ctx.stroke();
+
+      if(!team)return;
+      const fr=8*SCALE; // flag radius
+      const flagX=x+6*SCALE;
+      const cy=y+h/2;
+      drawFlag(flagX,cy,fr,team);
       // Country code
-      ctx.fillStyle=isWinner?"#ffffff":"#99aabb";
-      ctx.font=`${isWinner?"bold ":""}14px Oswald,sans-serif`;ctx.textAlign="left";
-      ctx.fillText(team.c||"",x+34,y+slotH/2+1);
-      // Score
-      ctx.fillStyle=isWinner?"#00a854":"#667788";
-      ctx.font="bold 16px Oswald,sans-serif";ctx.textAlign="right";
-      const scoreText=pen!=null?`${score} (${pen})`:`${score}`;
-      ctx.fillText(scoreText,x+w-10,y+slotH/2+1);
+      ctx.fillStyle=isW?"#ffffff":"rgba(180,195,220,0.9)";
+      ctx.font=`${isW?"800":"600"} ${9*SCALE}px Oswald,sans-serif`;
+      ctx.textAlign="left";ctx.textBaseline="middle";
+      ctx.fillText(team.c||"",flagX+fr*2+5*SCALE,cy);
+      // Score box
+      const sw=22*SCALE,sh=h-4*SCALE;
+      const sx=x+w-sw-3*SCALE,sy=y+2*SCALE;
+      ctx.fillStyle=isW?"#00a854":"rgba(40,55,80,0.8)";
+      ctx.beginPath();ctx.roundRect(sx,sy,sw,sh,3*SCALE);ctx.fill();
+      ctx.fillStyle=isW?"#fff":"rgba(150,170,200,0.8)";
+      ctx.font=`800 ${10*SCALE}px Oswald,sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+      const sTxt=pen!=null?`${score}`:`${score}`;
+      ctx.fillText(sTxt,sx+sw/2,sy+sh/2);
+      if(pen!=null){
+        ctx.fillStyle="rgba(251,176,59,0.8)";ctx.font=`600 ${6*SCALE}px Oswald,sans-serif`;
+        ctx.fillText(`(${pen})`,sx+sw/2,sy+sh/2+8*SCALE);
+      }
     };
 
-    const drawConnectors=(x1,y1,h1,x2,y2)=>{
-      ctx.strokeStyle="#2a3a5a";ctx.lineWidth=1;ctx.beginPath();
+    // Draw one match block (2 teams)
+    const drawMatch=(x,y,id)=>{
+      const m=ML[id];if(!m)return{y1:y,y2:y+MH+MGAP,mid:y+matchH/2};
+      const w1=m.wn&&m.t1&&m.wn.c===m.t1.c;
+      const w2=m.wn&&m.t2&&m.wn.c===m.t2.c;
+      drawTeamRow(x,y,MW,m.t1,m.g1,w1,m.p1);
+      drawTeamRow(x,y+MH+MGAP/2,MW,m.t2,m.g2,w2,m.p2);
+      return{y1:y+MH/2,y2:y+MH+MGAP/2+MH/2,mid:y+matchH/2};
+    };
+
+    // Draw connector lines between rounds
+    const drawConn=(x1,y1,x2,y2,mirror=false)=>{
+      ctx.strokeStyle="rgba(100,140,200,0.25)";ctx.lineWidth=1.5*SCALE;
       const midX=(x1+x2)/2;
-      ctx.moveTo(x1,y1+h1/2);ctx.lineTo(midX,y1+h1/2);
-      ctx.lineTo(midX,y2+h1/2);ctx.lineTo(x2,y2+h1/2);
-      ctx.stroke();
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(midX,y1);ctx.lineTo(midX,y2);ctx.lineTo(x2,y2);ctx.stroke();
+      // Small dot at junction
+      ctx.fillStyle="rgba(100,140,200,0.4)";
+      ctx.beginPath();ctx.arc(midX,y2,2*SCALE,0,Math.PI*2);ctx.fill();
     };
 
-    // Calculate positions for each round
-    const positions={};
-    rounds.forEach((round,ri)=>{
-      const n=round.ids.length;
-      const totalH=maxSlots*(slotH+gap);
+    // Layout helper: compute Y positions for n matches in a column, centered relative to parent
+    const layoutCol=(n,totalH,startY)=>{
       const spacing=totalH/n;
-      const x=padX+ri*(roundW+roundGap);
+      return Array.from({length:n},(_,i)=>startY+i*spacing+spacing/2-matchH/2);
+    };
 
-      // Round label
-      ctx.fillStyle="#fbb03b";ctx.font="bold 13px Oswald,sans-serif";ctx.textAlign="center";
-      ctx.fillText(round.name.toUpperCase(),x+roundW/2,padTop-12);
+    // ── DRAW LEFT SIDE ──
+    const drawSide=(r32ids,r16ids,qfids,sfid,startX,dir)=>{
+      const ys={};
+      // R32: 8 matches
+      const r32Ys=layoutCol(8,totalMatchH,TOPP);
+      const r32X=startX;
+      r32ids.forEach((id,i)=>{
+        const pos=drawMatch(r32X,r32Ys[i],id);
+        ys[id]=pos;
+      });
 
-      round.ids.forEach((id,mi)=>{
-        const m=mLookup[id];
-        const centerY=padTop+mi*spacing+spacing/2-(slotH+gap/2);
-        const y1=centerY;
-        const y2=centerY+slotH+gap/2;
-
-        if(m){
-          const w1=m.wn&&m.t1&&m.wn.c===m.t1.c;
-          const w2=m.wn&&m.t2&&m.wn.c===m.t2.c;
-          drawTeamSlot(x,y1,roundW,m.t1,m.g1,w1,m.p1);
-          drawTeamSlot(x,y2,roundW,m.t2,m.g2,w2,m.p2);
-        } else {
-          drawTeamSlot(x,y1,roundW,null,0,false);
-          drawTeamSlot(x,y2,roundW,null,0,false);
-        }
-        positions[id]={x:x+roundW,y1,y2};
-
-        // Draw connectors to next round
-        if(ri<rounds.length-1){
-          const nextRound=rounds[ri+1];
-          const nextIdx=Math.floor(mi/2);
-          if(mi%2===0&&nextRound.ids[nextIdx]){
-            const nn=nextRound.ids.length;
-            const ns=totalH/nn;
-            const nx=padX+(ri+1)*(roundW+roundGap);
-            const ncy=padTop+nextIdx*ns+ns/2-(slotH+gap/2);
-            const midY1=(y1+y2)/2+slotH/2;
-            // Draw line from this match to next
-            ctx.strokeStyle="#2a3a5a55";ctx.lineWidth=1;ctx.beginPath();
-            ctx.moveTo(x+roundW,midY1);
-            ctx.lineTo(x+roundW+roundGap/2,midY1);
-            ctx.stroke();
-          }
+      // R16: 4 matches
+      const r16X=startX+dir*(MW+RG);
+      const r16Ys=layoutCol(4,totalMatchH,TOPP);
+      r16ids.forEach((id,i)=>{
+        const pos=drawMatch(r16X,r16Ys[i],id);
+        ys[id]=pos;
+        // Connect from 2 R32 matches
+        const p1=ys[r32ids[i*2]],p2=ys[r32ids[i*2+1]];
+        if(p1&&p2){
+          const fromX=dir>0?r32X+MW:r32X;
+          const toX=dir>0?r16X:r16X+MW;
+          drawConn(fromX,p1.mid,toX,pos.y1);
+          drawConn(fromX,p2.mid,toX,pos.y2);
         }
       });
+
+      // QF: 2 matches
+      const qfX=r16X+dir*(MW+RG);
+      const qfYs=layoutCol(2,totalMatchH,TOPP);
+      qfids.forEach((id,i)=>{
+        const pos=drawMatch(qfX,qfYs[i],id);
+        ys[id]=pos;
+        const p1=ys[r16ids[i*2]],p2=ys[r16ids[i*2+1]];
+        if(p1&&p2){
+          const fromX=dir>0?r16X+MW:r16X;
+          const toX=dir>0?qfX:qfX+MW;
+          drawConn(fromX,p1.mid,toX,pos.y1);
+          drawConn(fromX,p2.mid,toX,pos.y2);
+        }
+      });
+
+      // SF: 1 match
+      const sfX=qfX+dir*(MW+RG);
+      const sfYs=layoutCol(1,totalMatchH,TOPP);
+      const sfPos=drawMatch(sfX,sfYs[0],sfid);
+      ys[sfid]=sfPos;
+      const qp1=ys[qfids[0]],qp2=ys[qfids[1]];
+      if(qp1&&qp2){
+        const fromX=dir>0?qfX+MW:qfX;
+        const toX=dir>0?sfX:sfX+MW;
+        drawConn(fromX,qp1.mid,toX,sfPos.y1);
+        drawConn(fromX,qp2.mid,toX,sfPos.y2);
+      }
+      return{sfX,sfPos,ys};
+    };
+
+    // Left half
+    const leftX=PAD;
+    const left=drawSide(leftR32,leftR16,leftQF,101,leftX,1);
+
+    // Right half (mirrored)
+    const rightX=W-PAD-MW;
+    const right=drawSide(rightR32,rightR16,rightQF,102,rightX,-1);
+
+    // ── FINAL (center) ──
+    const finalX=W/2-MW/2;
+    const finalY=TOPP+totalMatchH/2-matchH/2;
+    // Gold border for final
+    ctx.strokeStyle="#fbb03b";ctx.lineWidth=2*SCALE;
+    ctx.beginPath();ctx.roundRect(finalX-4*SCALE,finalY-20*SCALE,MW+8*SCALE,matchH+36*SCALE,8*SCALE);ctx.stroke();
+    // Final label
+    ctx.fillStyle="#fbb03b";ctx.font=`800 ${10*SCALE}px Oswald,sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText("FINAL",W/2,finalY-8*SCALE);
+    const fPos=drawMatch(finalX,finalY,104);
+    // Connect SF to Final
+    drawConn(left.sfX+MW,left.sfPos.mid,finalX,fPos.y1);
+    drawConn(right.sfX,right.sfPos.mid,finalX+MW,fPos.y2);
+
+    // ── CHAMPION BANNER ──
+    if(champ){
+      const banY=finalY+matchH+16*SCALE;
+      const banW=180*SCALE,banH=32*SCALE;
+      const banX=W/2-banW/2;
+      // Gold gradient background
+      const grd=ctx.createLinearGradient(banX,banY,banX+banW,banY);
+      grd.addColorStop(0,"#fbb03b");grd.addColorStop(0.5,"#ffd700");grd.addColorStop(1,"#fbb03b");
+      ctx.fillStyle=grd;
+      ctx.beginPath();ctx.roundRect(banX,banY,banW,banH,6*SCALE);ctx.fill();
+      // Trophy + champion name
+      ctx.fillStyle="#0b1120";ctx.font=`800 ${12*SCALE}px Oswald,sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+      ctx.fillText(`🏆  ${N(champ).toUpperCase()}  🏆`,W/2,banY+banH/2);
+      // Flag below
+      const fcy=banY+banH+16*SCALE;
+      drawFlag(W/2-14*SCALE,fcy,14*SCALE,champ);
+    }
+
+    // Round labels
+    const labels=[L.r32,L.r16,L.qf,L.sf];
+    const labelY=TOPP-14*SCALE;
+    ctx.font=`700 ${7*SCALE}px Oswald,sans-serif`;ctx.textBaseline="bottom";
+    labels.forEach((lb,i)=>{
+      const lx=PAD+i*(MW+RG)+MW/2;
+      const rx=W-PAD-i*(MW+RG)-MW/2;
+      ctx.fillStyle="rgba(251,176,59,0.6)";ctx.textAlign="center";
+      ctx.fillText(lb.toUpperCase(),lx,labelY);
+      ctx.fillText(lb.toUpperCase(),rx,labelY);
     });
 
     // Watermark
-    ctx.fillStyle="#ffffff22";ctx.font="11px Oswald,sans-serif";ctx.textAlign="center";
-    ctx.fillText("Generated by wcupsim.com — FIFA World Cup 2026 Simulator",W/2,H-20);
+    ctx.fillStyle="rgba(255,255,255,0.15)";ctx.font=`600 ${7*SCALE}px Oswald,sans-serif`;ctx.textAlign="center";ctx.textBaseline="bottom";
+    ctx.fillText("wcupsim.com — FIFA World Cup 2026 Simulator — by Zouhaire El Matar",W/2,H-10*SCALE);
 
     // Download
     const link=document.createElement("a");
     link.download="worldcup2026-bracket.png";
     link.href=canvas.toDataURL("image/png");
     link.click();
-  },[champ,mode,autoAll,br,koW,N,L]);
+  },[champ,mode,autoAll,br,N,L]);
 
   // Share (text or bracket image)
   const doShare=useCallback(()=>{
