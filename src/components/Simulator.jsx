@@ -169,18 +169,27 @@ function getStrength(t){
 // Upset probability: lower-tier teams can still surprise, but rarely
 function upsetFactor(stronger, weaker){
   const gap = stronger - weaker;
-  if(gap > 30) return 0.05; // Near impossible upset (Spain vs Cape Verde)
-  if(gap > 20) return 0.10; // Very unlikely (France vs Haiti)
-  if(gap > 15) return 0.18; // Unlikely but possible (Germany vs Curacao)
-  if(gap > 10) return 0.25; // Occasional upset (Netherlands vs Tunisia)
-  if(gap > 5) return 0.35;  // Competitive (Morocco vs Denmark)
-  return 0.42; // Close match
+  if(gap > 30) return 0.05;
+  if(gap > 20) return 0.10;
+  if(gap > 15) return 0.18;
+  if(gap > 10) return 0.25;
+  if(gap > 5) return 0.35;
+  return 0.42;
+}
+
+// Dark horse factor: ~5% chance a tier 3-4 team gets a "magic day" boost in KO
+// Simulates historic upsets: South Korea 2002, Costa Rica 2014, Morocco 2022
+function darkHorseBoost(team, ko){
+  if(!ko) return 0;
+  if(team.tier <= 2 || team.tier >= 5) return 0; // Only tier 3-4 can be dark horses
+  if(Math.random() > 0.05) return 0; // 5% chance (~1/20)
+  return 12 + Math.random() * 6; // +12 to +18 strength boost on that day
 }
 
 function simM(a,b,ko=false){
-  const sA=getStrength(a), sB=getStrength(b);
+  const sA=getStrength(a)+darkHorseBoost(a,ko), sB=getStrength(b)+darkHorseBoost(b,ko);
   const gap=Math.abs(sA-sB);
-  const diff=(sA-sB)/80; // Normalized difference (wider scale = bigger impact)
+  const diff=(sA-sB)/80;
 
   // Defense impact: good defense reduces opponent's xG significantly
   const defFactorB = 1 - ((b.df||5) - 5) * 0.06; // df=8 → -18% opponent xG
