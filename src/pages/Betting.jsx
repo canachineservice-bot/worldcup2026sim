@@ -321,6 +321,25 @@ export default function Betting(){
           🎰 START BETTING NOW →
         </a>
       </div>
+
+      <div style={{maxWidth:800,margin:"32px auto 0",color:C.t2,fontSize:14,lineHeight:1.8}}>
+        <h2 style={{fontFamily:"'Oswald',sans-serif",fontSize:20,fontWeight:700,color:C.tx,letterSpacing:2,marginBottom:10}}>WORLD CUP 2026 BETTING GUIDE</h2>
+        <p>The 2026 FIFA World Cup offers exciting betting opportunities across 104 matches. Our betting stats page provides comprehensive data to help you make informed decisions, including team rankings, head-to-head records, current form, and live odds from major bookmakers.</p>
+
+        <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:17,fontWeight:700,color:C.tx,marginTop:20,marginBottom:8}}>Understanding World Cup Odds</h3>
+        <p>Odds reflect the probability of each outcome. In decimal odds (used in Europe), multiply your stake by the odds to calculate potential returns. For example, odds of 2.50 on a team means a $10 bet returns $25 if they win. Lower odds indicate favorites, while higher odds represent underdogs with bigger potential payouts.</p>
+
+        <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:17,fontWeight:700,color:C.tx,marginTop:20,marginBottom:8}}>Key Betting Markets</h3>
+        <p><strong>Match Winner (1X2):</strong> The most popular market — predict the winner or a draw in group stage matches. In knockout rounds, you bet on who advances (including extra time and penalties).</p>
+        <p><strong>Over/Under Goals:</strong> Bet on whether a match will have more or fewer than a specific number of goals. World Cup group stage matches average around 2.5 goals per game.</p>
+        <p><strong>Outright Winner:</strong> Bet on which team will lift the trophy. Early bets on underdogs can offer exceptional value if you spot a dark horse like Morocco in 2022.</p>
+
+        <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:17,fontWeight:700,color:C.tx,marginTop:20,marginBottom:8}}>Betting Tips for World Cup 2026</h3>
+        <p>Research team form, injury reports, and tactical matchups before placing bets. Consider the impact of travel distances between venues, altitude differences (Mexico City sits at 2,240m), and climate variations across the three host countries. Group stage matches often produce surprises, while knockout rounds tend to be tighter and more tactical.</p>
+
+        <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:17,fontWeight:700,color:C.tx,marginTop:20,marginBottom:8}}>Responsible Gambling</h3>
+        <p>Always bet responsibly. Set a budget before the tournament starts and stick to it. Never chase losses, and remember that sports betting should be entertainment, not a source of income. If you feel you may have a gambling problem, seek help from organizations like GamCare or Gamblers Anonymous.</p>
+      </div>
     </Layout>
   );
 }

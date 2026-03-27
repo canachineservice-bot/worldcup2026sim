@@ -69,6 +69,23 @@ export default function Predictions() {
           SIMULATE NOW
         </Link>
       </div>
+
+      <div style={{ maxWidth: 800, margin: '32px auto 0', color: '#555577', fontSize: 14, lineHeight: 1.8 }}>
+        <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, fontWeight: 700, color: '#1a1a2e', letterSpacing: 2, marginBottom: 10 }}>WORLD CUP 2026 PREDICTIONS & ANALYSIS</h2>
+        <p>Predicting the winner of the 2026 FIFA World Cup requires analyzing multiple factors: current FIFA rankings, squad depth, tactical systems, recent tournament performance, qualifying form, and the crucial home advantage for host nations USA, Mexico, and Canada.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Why Spain and France Lead the Odds</h3>
+        <p>Spain enters as reigning World Cup and European champions with the youngest title-winning squad in modern history. Their possession-based style and depth across every position makes them the bookmakers' favorite. France, despite recent setbacks, possesses arguably the most talented roster in world football and has reached two consecutive World Cup Finals (2018 winner, 2022 runner-up).</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>South American Contenders</h3>
+        <p>Argentina, the defending champions, and Brazil, the most successful World Cup nation with 5 titles, represent South America's strongest hopes. Argentina's 2022 triumph in Qatar demonstrated their ability to peak at tournaments, while Brazil's new generation is eager to end a title drought stretching back to 2002.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>The Host Nation Factor</h3>
+        <p>History shows that host nations consistently outperform expectations at the World Cup. The USA will benefit from massive home crowd support across multiple venues, familiarity with playing conditions, and zero travel fatigue. South Korea (2002, 4th place), Russia (2018, Quarter-Finals), and Qatar (2022, group stage despite low ranking) all exceeded expectations as hosts.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>African and Asian Dark Horses</h3>
+        <p>Morocco's historic Semi-Final run in 2022 proved that African nations can compete at the highest level. Japan's victories over Germany and Spain in the 2022 group stage showed Asian football's rapid development. Senegal, led by a talented generation, and South Korea, with their passionate support, could also spring surprises in 2026.</p>
+      </div>
     </Layout>
   )
 }

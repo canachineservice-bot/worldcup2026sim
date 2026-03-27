@@ -1028,10 +1028,36 @@ export default function App(){
       </details>))}
   </div>)}
 
+  {/* ── SEO CONTENT ── */}
+  <div style={{maxWidth:800,margin:"0 auto",padding:"40px 20px",color:C.t2,fontSize:14,lineHeight:1.8}}>
+    <h2 style={{fontFamily:"'Oswald',sans-serif",fontSize:22,fontWeight:700,color:C.tx,letterSpacing:2,marginBottom:12}}>FIFA WORLD CUP 2026 SIMULATOR</h2>
+    <p>Welcome to the most advanced FIFA World Cup 2026 simulator available online. Our simulator uses real FIFA rankings, historical World Cup data, current team form, and defensive ratings to generate realistic tournament outcomes. With 48 teams competing across 12 groups and 104 matches, the 2026 FIFA World Cup in USA, Mexico, and Canada will be the biggest World Cup in history.</p>
+
+    <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:18,fontWeight:700,color:C.tx,marginTop:24,marginBottom:8}}>How Does the Simulator Work?</h3>
+    <p>Our simulation engine calculates expected goals (xG) for each team based on multiple factors: FIFA rating, World Cup titles, tournament experience, current form, and defensive strength. Host nations (USA, Mexico, Canada) receive a home advantage boost. The simulator also includes a dark horse factor — approximately 1 in 20 knockout matches features an upset, just like real World Cup history (South Korea 2002, Costa Rica 2014, Morocco 2022).</p>
+
+    <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:18,fontWeight:700,color:C.tx,marginTop:24,marginBottom:8}}>Three Simulation Modes</h3>
+    <p><strong>Auto Simulation:</strong> Watch the entire tournament unfold automatically — all 104 matches simulated in seconds with progressive round-by-round reveal from Group Stage through the Final.</p>
+    <p><strong>Manual Simulation:</strong> Take full control by setting scores for every match, or simulate individual games. Perfect for testing specific scenarios and "what if" predictions.</p>
+    <p><strong>Quick Manual:</strong> Rank teams in each group by drag-and-drop, then pick knockout winners. The fastest way to create your personal World Cup bracket prediction.</p>
+
+    <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:18,fontWeight:700,color:C.tx,marginTop:24,marginBottom:8}}>World Cup 2026 Format</h3>
+    <p>The 2026 FIFA World Cup introduces a new expanded format with 48 teams divided into 12 groups of 4. The top 2 teams from each group qualify automatically, along with the 8 best third-placed teams, creating a Round of 32 followed by Round of 16, Quarter-Finals, Semi-Finals, Third Place match, and the Grand Final.</p>
+
+    <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:18,fontWeight:700,color:C.tx,marginTop:24,marginBottom:8}}>Share Your Results</h3>
+    <p>After each simulation, download your complete tournament bracket as a professional PNG image — perfect for sharing on social media, WhatsApp groups, and TikTok. Compare predictions with friends and see who gets closest to the real results!</p>
+
+    <h3 style={{fontFamily:"'Oswald',sans-serif",fontSize:18,fontWeight:700,color:C.tx,marginTop:24,marginBottom:8}}>Available in 6 Languages</h3>
+    <p>Our World Cup simulator is available in French, English, Arabic, Portuguese, Spanish, and Hindi — covering fans across every continent. All team names are translated and the interface adapts with RTL support for Arabic speakers.</p>
+  </div>
+
   {/* ── FOOTER ── */}
   <div style={{textAlign:"center",padding:"14px 12px 32px"}}>
     <div style={{fontFamily:"'Oswald',sans-serif",fontSize:10,fontWeight:600,letterSpacing:1,color:C.t3}}>
       WORLD CUP 2026 SIMULATOR — WCUPSIM.COM
+    </div>
+    <div style={{marginTop:6}}>
+      <Link to="/privacy" style={{color:C.t3,fontSize:11}}>Privacy Policy</Link>
     </div>
   </div>
   </div>);

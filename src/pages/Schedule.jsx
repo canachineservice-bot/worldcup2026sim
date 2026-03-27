@@ -65,6 +65,20 @@ export default function Schedule() {
           </div>
         ))}
       </div>
+
+      <div style={{ maxWidth: 800, margin: '32px auto 0', color: '#555577', fontSize: 14, lineHeight: 1.8 }}>
+        <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, fontWeight: 700, color: '#1a1a2e', letterSpacing: 2, marginBottom: 10 }}>WORLD CUP 2026 SCHEDULE & VENUES GUIDE</h2>
+        <p>The 2026 FIFA World Cup will be held across three countries — the United States, Mexico, and Canada — marking the first tri-nation hosted World Cup in FIFA history. With 16 world-class stadiums, 48 participating nations, and 104 total matches, this tournament promises to be the largest and most spectacular football event ever organized.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Key Dates</h3>
+        <p>The tournament kicks off on June 11, 2026 with the opening match, and concludes with the Final on July 19, 2026 at MetLife Stadium in East Rutherford, New Jersey. The group stage runs for 18 days, followed by the knockout rounds spanning three weeks of intense elimination football.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Historic Venues</h3>
+        <p>The 2026 World Cup features iconic stadiums including the legendary Estadio Azteca in Mexico City (the only stadium to host two World Cup Finals — 1970 and 1986), the state-of-the-art SoFi Stadium in Los Angeles, and MetLife Stadium, the largest NFL stadium in the United States. Canadian venues include BC Place in Vancouver and BMO Field in Toronto.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Time Zones and Kick-Off Times</h3>
+        <p>Matches will be played across multiple North American time zones, from Pacific Time (Vancouver, Los Angeles, San Francisco) to Eastern Time (New York, Miami, Toronto) and Central Time (Mexico City, Dallas, Houston). FIFA will schedule matches to maximize global viewership across Europe, Africa, Asia, and South America.</p>
+      </div>
     </Layout>
   )
 }

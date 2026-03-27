@@ -45,6 +45,21 @@ export default function Groups() {
           </div>
         ))}
       </div>
+
+      <div style={{ maxWidth: 800, margin: '32px auto 0', color: '#555577', fontSize: 14, lineHeight: 1.8 }}>
+        <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, fontWeight: 700, color: '#1a1a2e', letterSpacing: 2, marginBottom: 10 }}>WORLD CUP 2026 GROUP STAGE EXPLAINED</h2>
+        <p>The 2026 FIFA World Cup features the first-ever 48-team format, with teams divided into 12 groups of 4. Each team plays 3 group stage matches. The top 2 teams from each group (24 teams) advance automatically to the Round of 32, joined by the 8 best third-placed teams from across all groups.</p>
+        <p>Group winners and runners-up are determined by: total points (3 for a win, 1 for a draw, 0 for a loss), then goal difference, then goals scored. If teams are still tied, head-to-head results, fair play points, and finally a drawing of lots determine the ranking.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Groups of Death to Watch</h3>
+        <p>Several groups feature incredibly competitive matchups. Group C with Brazil and Morocco promises fireworks, while Group L featuring England and Croatia is a rematch of the 2018 Semi-Final. Group F with Netherlands, Japan, and Ukraine could produce dramatic results, and Group H with Spain and Uruguay brings together two former World Cup champions.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Host Nation Groups</h3>
+        <p>The three host nations are spread across different groups: Mexico in Group A, Canada in Group B, and USA in Group D. Each host nation benefits from home crowd support and familiar playing conditions, historically providing a significant advantage in World Cup group stages.</p>
+
+        <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Debutants and Dark Horses</h3>
+        <p>The expanded 48-team format welcomes several first-time World Cup participants, including Curacao, Cape Verde, and potentially other emerging football nations. Meanwhile, traditional dark horses like Morocco (2022 Semi-Finalists), Japan (2022 group stage giant-killers), and Senegal (2002 Quarter-Finalists) will look to cause upsets once again.</p>
+      </div>
     </Layout>
   )
 }
