@@ -1,12 +1,12 @@
 import Layout from './Layout'
 
 const GROUPS = {
-  A: [['MEX','Mexico','🇲🇽'],['KOR','South Korea','🇰🇷'],['RSA','South Africa','🇿🇦'],['DEN','Denmark','🇩🇰']],
-  B: [['CAN','Canada','🇨🇦'],['SUI','Switzerland','🇨🇭'],['QAT','Qatar','🇶🇦'],['ITA','Italy','🇮🇹']],
+  A: [['MEX','Mexico','🇲🇽'],['KOR','South Korea','🇰🇷'],['RSA','South Africa','🇿🇦'],['CZE','Czechia','🇨🇿']],
+  B: [['CAN','Canada','🇨🇦'],['SUI','Switzerland','🇨🇭'],['QAT','Qatar','🇶🇦'],['BIH','Bosnia & Herzegovina','🇧🇦']],
   C: [['BRA','Brazil','🇧🇷'],['MAR','Morocco','🇲🇦'],['SCO','Scotland','🏴󠁧󠁢󠁳󠁣󠁴󠁿'],['HAI','Haiti','🇭🇹']],
   D: [['USA','USA','🇺🇸'],['AUS','Australia','🇦🇺'],['PAR','Paraguay','🇵🇾'],['TUR','Turkiye','🇹🇷']],
   E: [['GER','Germany','🇩🇪'],['CIV','Ivory Coast','🇨🇮'],['ECU','Ecuador','🇪🇨'],['CUR','Curacao','🇨🇼']],
-  F: [['NED','Netherlands','🇳🇱'],['TUN','Tunisia','🇹🇳'],['JPN','Japan','🇯🇵'],['UKR','Ukraine','🇺🇦']],
+  F: [['NED','Netherlands','🇳🇱'],['TUN','Tunisia','🇹🇳'],['JPN','Japan','🇯🇵'],['SWE','Sweden','🇸🇪']],
   G: [['BEL','Belgium','🇧🇪'],['IRN','Iran','🇮🇷'],['EGY','Egypt','🇪🇬'],['NZL','New Zealand','🇳🇿']],
   H: [['ESP','Spain','🇪🇸'],['URU','Uruguay','🇺🇾'],['KSA','Saudi Arabia','🇸🇦'],['CPV','Cape Verde','🇨🇻']],
   I: [['FRA','France','🇫🇷'],['SEN','Senegal','🇸🇳'],['NOR','Norway','🇳🇴'],['IRQ','Iraq','🇮🇶']],
@@ -52,7 +52,7 @@ export default function Groups() {
         <p>Group winners and runners-up are determined by: total points (3 for a win, 1 for a draw, 0 for a loss), then goal difference, then goals scored. If teams are still tied, head-to-head results, fair play points, and finally a drawing of lots determine the ranking.</p>
 
         <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Groups of Death to Watch</h3>
-        <p>Several groups feature incredibly competitive matchups. Group C with Brazil and Morocco promises fireworks, while Group L featuring England and Croatia is a rematch of the 2018 Semi-Final. Group F with Netherlands, Japan, and Ukraine could produce dramatic results, and Group H with Spain and Uruguay brings together two former World Cup champions.</p>
+        <p>Several groups feature incredibly competitive matchups. Group C with Brazil and Morocco promises fireworks, while Group L featuring England and Croatia is a rematch of the 2018 Semi-Final. Group F with Netherlands, Japan, and Sweden could produce dramatic results, and Group H with Spain and Uruguay brings together two former World Cup champions.</p>
 
         <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 17, fontWeight: 700, color: '#1a1a2e', marginTop: 20, marginBottom: 8 }}>Host Nation Groups</h3>
         <p>The three host nations are spread across different groups: Mexico in Group A, Canada in Group B, and USA in Group D. Each host nation benefits from home crowd support and familiar playing conditions, historically providing a significant advantage in World Cup group stages.</p>

@@ -9,10 +9,10 @@ const ODDS_API_URL="https://api.the-odds-api.com/v4/sports/soccer_fifa_world_cup
 
 // Team name mapping for API matching
 const TEAM_NAMES={
-  MEX:"Mexico",KOR:"South Korea",RSA:"South Africa",DEN:"Denmark",CAN:"Canada",SUI:"Switzerland",
-  QAT:"Qatar",ITA:"Italy",BRA:"Brazil",MAR:"Morocco",SCO:"Scotland",HAI:"Haiti",USA:"United States",
+  MEX:"Mexico",KOR:"South Korea",RSA:"South Africa",CZE:"Czechia",CAN:"Canada",SUI:"Switzerland",
+  QAT:"Qatar",BIH:"Bosnia",BRA:"Brazil",MAR:"Morocco",SCO:"Scotland",HAI:"Haiti",USA:"United States",
   AUS:"Australia",PAR:"Paraguay",TUR:"Turkey",GER:"Germany",CIV:"Ivory Coast",ECU:"Ecuador",CUR:"Curacao",
-  NED:"Netherlands",TUN:"Tunisia",JPN:"Japan",UKR:"Ukraine",BEL:"Belgium",IRN:"Iran",EGY:"Egypt",
+  NED:"Netherlands",TUN:"Tunisia",JPN:"Japan",SWE:"Sweden",BEL:"Belgium",IRN:"Iran",EGY:"Egypt",
   NZL:"New Zealand",ESP:"Spain",URU:"Uruguay",KSA:"Saudi Arabia",CPV:"Cape Verde",FRA:"France",
   SEN:"Senegal",NOR:"Norway",IRQ:"Iraq",ARG:"Argentina",AUT:"Austria",JOR:"Jordan",ALG:"Algeria",
   POR:"Portugal",COL:"Colombia",UZB:"Uzbekistan",COD:"DR Congo",ENG:"England",CRO:"Croatia",
